@@ -1,36 +1,140 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🧮 Calculadoras Financieras
 
-## Getting Started
+Plataforma web full-stack para emprendedores freelances con calculadoras financieras de 0% error y consejos inteligentes basados en datos.
 
-First, run the development server:
+## 🚀 Características
 
+- **Diseño Apple-like**: Interfaz minimalista, elegante y funcional
+- **Calculadoras precisas**: Algoritmos avanzados para cálculos financieros exactos
+- **Modo oscuro**: Experiencia visual adaptable
+- **Exportación profesional**: Reportes en PDF listos para presentar
+- **Responsive**: Adaptado para todos los dispositivos
+
+## 🧮 Calculadoras Disponibles
+
+### 1. Calculadora de Precio Ideal
+- **Análisis de costos**: Costo de producción, operativos y fijos
+- **Competencia**: Análisis de precios del mercado
+- **Valor percibido**: Evaluación del valor para el cliente
+- **Estrategias de precios**: Penetración, premium, competitivo
+- **Proyecciones financieras**: ROI, ganancias mensuales/anuales
+
+### 2. Calculadora de Punto de Equilibrio
+- **Análisis CVU**: Costos-Volumen-Utilidad
+- **Métricas clave**: Unidades BEP, Ingresos BEP, Margen de Contribución
+- **Margen de seguridad**: Análisis de riesgo financiero
+- **Gráfica interactiva**: Visualización del punto de equilibrio
+- **Exportación**: Reporte profesional en PDF
+
+## 🛠️ Tecnologías
+
+### Frontend
+- **Next.js 15**: Framework React con App Router
+- **TypeScript**: Tipado estricto para mayor confiabilidad
+- **Tailwind CSS**: Styling utilitario y responsive
+- **Recharts**: Gráficos interactivos y profesionales
+- **Lucide React**: Iconografía moderna y consistente
+
+### Backend
+- **Python + FastAPI** - API robusta y rápida
+- **Pydantic** - Validación de datos
+- **NumPy/Pandas** - Cálculos financieros precisos
+- **SQLAlchemy** - ORM para base de datos
+- **PostgreSQL** - Base de datos en producción
+
+## 📊 Calculadoras Disponibles
+
+### ✅ Calculadora de Precio Ideal
+- Análisis de costos (materiales, mano de obra, gastos generales)
+- Cálculo de margen de ganancia deseado
+- Análisis competitivo automático
+- Múltiples estrategias de precios
+- Proyecciones financieras
+
+### 🔜 Próximas Calculadoras
+- Calculadora de ROI
+- Calculadora de Flujo de Caja
+- Calculadora de Punto de Equilibrio
+- Calculadora de Presupuesto
+- Calculadora de Inversiones
+
+## 🎨 Diseño
+
+Inspirado en el ecosistema Apple con principios de:
+- **Minimalismo**: Interfaz limpia sin elementos innecesarios
+- **Funcionalidad**: Cada elemento tiene un propósito claro
+- **Accesibilidad**: Colores contrastados y navegación por teclado
+- **Responsive**: Mobile-first, adaptable a todas las pantallas
+
+## 🚀 Instalación y Desarrollo
+
+### Frontend
 ```bash
+# Instalar dependencias
+npm install
+
+# Ejecutar en desarrollo
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+
+# Build para producción
+npm run build
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Backend
+```bash
+# Navegar al directorio backend
+cd backend
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+# Instalar dependencias
+pip install -r requirements.txt
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+# Ejecutar servidor
+uvicorn app.main:app --reload
+```
 
-## Learn More
+## 📁 Estructura del Proyecto
 
-To learn more about Next.js, take a look at the following resources:
+```
+calculadoras/
+├── src/
+│   ├── app/                 # App Router de Next.js
+│   ├── components/
+│   │   ├── ui/             # Componentes UI reutilizables
+│   │   └── calculators/    # Calculadoras específicas
+│   └── lib/                # Utilidades y helpers
+├── backend/
+│   ├── app/
+│   │   ├── routers/        # Endpoints de API
+│   │   ├── models/         # Modelos de datos
+│   │   └── services/       # Lógica de negocio
+│   └── tests/              # Tests del backend
+├── public/                 # Archivos estáticos
+└── .github/                # GitHub Actions y configuración
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🎯 Roadmap
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- [ ] Integración con APIs de datos financieros en tiempo real
+- [ ] Sistema de autenticación y perfiles de usuario
+- [ ] Exportación de resultados en PDF/Excel
+- [ ] Dashboard personalizado para cada usuario
+- [ ] Modo oscuro
+- [ ] Aplicación móvil con React Native
 
-## Deploy on Vercel
+## 🤝 Contribuir
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+¡Las contribuciones son bienvenidas! Por favor lee las guías de contribución antes de enviar un PR.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 📄 Licencia
+
+Este proyecto está bajo la Licencia MIT. Ver el archivo `LICENSE` para más detalles.
+
+## 🔗 Enlaces
+
+- **Frontend**: Desplegado en Vercel
+- **Backend**: Desplegado en Railway
+- **Documentación**: [Próximamente]
+
+---
+
+Hecho con ❤️ para emprendedores que buscan tomar decisiones financieras inteligentes.
