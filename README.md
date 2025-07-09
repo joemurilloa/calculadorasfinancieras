@@ -36,11 +36,29 @@ Plataforma web full-stack para emprendedores freelances con calculadoras financi
 - **Lucide React**: Iconografía moderna y consistente
 
 ### Backend
-- **Python + FastAPI** - API robusta y rápida
-- **Pydantic** - Validación de datos
-- **NumPy/Pandas** - Cálculos financieros precisos
-- **SQLAlchemy** - ORM para base de datos
-- **PostgreSQL** - Base de datos en producción
+- **FastAPI**: API moderna y rápida con validación automática
+- **Vercel Serverless**: Deploy automático como funciones serverless  
+- **Pydantic**: Validación robusta de datos de entrada
+- **Python 3.9**: Runtime optimizado para Vercel
+- **CORS configurado**: Acceso seguro desde el frontend
+
+### Arquitectura
+- **Frontend**: Next.js desplegado en Vercel
+- **Backend**: FastAPI como funciones serverless en Vercel
+- **Base de datos**: PostgreSQL en producción (opcional)
+- **Caching**: Vercel Edge Network
+
+## 🌐 API Endpoints
+
+### Calculadora de Precios
+- `POST /api/v1/pricing/calculate`: Calcular precio ideal
+- `GET /api/health`: Estado de la API
+
+### Calculadora de Punto de Equilibrio  
+- `POST /api/v1/breakeven/calculate`: Calcular punto de equilibrio
+
+### Monitoreo
+- `GET /api`: Información general de la API
 
 ## 📊 Calculadoras Disponibles
 
