@@ -2,7 +2,7 @@ from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel, Field
 from decimal import Decimal
 from typing import Optional, List
-import numpy as np
+import statistics
 
 router = APIRouter()
 
@@ -60,17 +60,22 @@ class PricingService:
 
     @staticmethod
     def analyze_competition(competitor_prices: List[float]) -> dict:
-        """Analiza precios de competidores"""
+        """Analiza precios de competidores sin dependencias pesadas"""
         if not competitor_prices:
             return {"message": "No hay datos de competidores"}
 
-        prices = np.array(competitor_prices)
+        prices = [float(p) for p in competitor_prices]
+        try:
+            std_dev = statistics.stdev(prices) if len(prices) > 1 else 0.0
+        except statistics.StatisticsError:
+            std_dev = 0.0
+
         return {
-            "min_price": float(np.min(prices)),
-            "max_price": float(np.max(prices)),
-            "avg_price": float(np.mean(prices)),
-            "median_price": float(np.median(prices)),
-            "std_deviation": float(np.std(prices))
+            "min_price": float(min(prices)),
+            "max_price": float(max(prices)),
+            "avg_price": float(statistics.mean(prices)),
+            "median_price": float(statistics.median(prices)),
+            "std_deviation": float(std_dev),
         }
 
     @staticmethod

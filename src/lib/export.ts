@@ -1,5 +1,7 @@
 import { PricingResult } from '@/hooks/usePricingCalculator';
 import { BreakevenResult, BreakevenFormData } from '@/hooks/useBreakevenCalculator';
+import type { CashflowResult } from '@/hooks/useCashflowCalculator';
+import type { ROIResult } from '@/hooks/useROICalculator';
 import { formatCurrency, formatPercentage } from './formatters';
 
 export const exportToPDF = async (result: PricingResult, productName: string) => {
@@ -595,4 +597,333 @@ export const exportBreakevenToPDF = async (result: BreakevenResult, formData: Br
     console.error('Error al exportar PDF:', error);
     alert('Error al generar el reporte. Por favor, intenta nuevamente.');
   }
+};
+
+export const exportCashflowToHTML = async (result: CashflowResult) => {
+  const currentDate = new Date().toLocaleDateString('es-ES', {
+    year: 'numeric', month: 'long', day: 'numeric'
+  });
+
+  const html = `
+  <!DOCTYPE html>
+  <html>
+  <head>
+    <meta charset="utf-8">
+    <title>Flujo de Caja Mensual</title>
+    <style>
+      body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color:#0f172a; padding:40px; }
+      h1 { margin:0 0 8px 0; }
+      .grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap:16px; }
+      .card { background:#f8fafc; border:1px solid #e2e8f0; border-radius:12px; padding:16px; }
+      .label { color:#475569; font-size:12px; margin-bottom:4px; }
+      .value { font-weight:700; font-size:20px; }
+      table { width:100%; border-collapse:collapse; margin-top:16px; }
+      th, td { padding:10px; border-bottom:1px solid #e2e8f0; text-align:left; }
+      th { background:#f1f5f9; font-weight:600; }
+    </style>
+  </head>
+  <body>
+    <h1>📊 Flujo de Caja Mensual</h1>
+    <p style="color:#64748b">Generado el ${currentDate}</p>
+    <div class="grid">
+      <div class="card"><div class="label">Total Ingresos</div><div class="value">${result.totals.total_inflows.toLocaleString()}</div></div>
+      <div class="card"><div class="label">Total Egresos</div><div class="value">${result.totals.total_outflows.toLocaleString()}</div></div>
+      <div class="card"><div class="label">Flujo Neto</div><div class="value">${result.totals.net_cash_flow.toLocaleString()}</div></div>
+      <div class="card"><div class="label">Caja Final</div><div class="value">${result.totals.ending_cash.toLocaleString()}</div></div>
+      <div class="card"><div class="label">Burn Rate</div><div class="value">${result.totals.burn_rate.toLocaleString()}</div></div>
+      <div class="card"><div class="label">Runway (meses)</div><div class="value">${result.totals.runway_months ?? '—'}</div></div>
+    </div>
+    <h2>Detalle de Ingresos</h2>
+    <table>
+      <thead><tr><th>Concepto</th><th>Monto</th></tr></thead>
+      <tbody>
+        ${result.breakdown.inflows.map(i => `<tr><td>${i.name}</td><td>${i.amount.toLocaleString()}</td></tr>`).join('')}
+      </tbody>
+    </table>
+    <h2>Detalle de Egresos</h2>
+    <table>
+      <thead><tr><th>Concepto</th><th>Monto</th></tr></thead>
+      <tbody>
+        ${result.breakdown.outflows.map(i => `<tr><td>${i.name}</td><td>${i.amount.toLocaleString()}</td></tr>`).join('')}
+      </tbody>
+    </table>
+    <h2>Análisis</h2>
+    <p><b>Nivel de riesgo:</b> ${result.analysis.risk_level}</p>
+    <p>${result.analysis.summary}</p>
+    <ul>
+      ${result.analysis.recommendations.map(r => `<li>${r}</li>`).join('')}
+    </ul>
+  </body>
+  </html>`;
+
+  const blob = new Blob([html], { type: 'text/html' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `cashflow-${new Date().toISOString().split('T')[0]}.html`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+};
+
+export const exportCashflowToCSV = (result: CashflowResult) => {
+  const rows: string[][] = [];
+  rows.push(['Métrica','Valor']);
+  rows.push(['Total Ingresos', String(result.totals.total_inflows)]);
+  rows.push(['Total Egresos', String(result.totals.total_outflows)]);
+  rows.push(['Flujo Operativo', String(result.totals.operating_cash_flow)]);
+  rows.push(['FCF', String(result.totals.free_cash_flow)]);
+  rows.push(['Flujo Neto', String(result.totals.net_cash_flow)]);
+  rows.push(['Caja Final', String(result.totals.ending_cash)]);
+  rows.push(['Burn Rate', String(result.totals.burn_rate)]);
+  rows.push(['Runway', String(result.totals.runway_months ?? '')]);
+  rows.push([]);
+  rows.push(['Ingresos']);
+  rows.push(['Concepto','Monto']);
+  for (const i of result.breakdown.inflows) rows.push([i.name, String(i.amount)]);
+  rows.push([]);
+  rows.push(['Egresos']);
+  rows.push(['Concepto','Monto']);
+  for (const i of result.breakdown.outflows) rows.push([i.name, String(i.amount)]);
+
+  const csv = rows.map(r => r.join(',')).join('\n');
+  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `cashflow-${new Date().toISOString().split('T')[0]}.csv`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+};
+
+export const exportROIToHTML = async (result: ROIResult) => {
+  const currentDate = new Date().toLocaleDateString('es-ES', {
+    year: 'numeric', month: 'long', day: 'numeric'
+  });
+
+  const html = `
+  <!DOCTYPE html>
+  <html>
+  <head>
+    <meta charset="utf-8">
+    <title>Análisis de ROI - Retorno de Inversión</title>
+    <style>
+      body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color:#0f172a; padding:40px; line-height:1.6; }
+      h1 { margin:0 0 8px 0; color:#1e293b; }
+      h2 { color:#475569; border-bottom:2px solid #e2e8f0; padding-bottom:8px; margin-top:32px; }
+      .grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap:16px; margin:24px 0; }
+      .card { background:#f8fafc; border:1px solid #e2e8f0; border-radius:12px; padding:16px; text-align:center; }
+      .card.excellent { border-left:4px solid #10b981; background:#ecfdf5; }
+      .card.good { border-left:4px solid #3b82f6; background:#eff6ff; }
+      .card.fair { border-left:4px solid #f59e0b; background:#fffbeb; }
+      .card.poor { border-left:4px solid #ef4444; background:#fef2f2; }
+      .label { color:#475569; font-size:12px; margin-bottom:4px; text-transform:uppercase; letter-spacing:0.5px; }
+      .value { font-weight:700; font-size:20px; margin:0; }
+      .large { font-size:24px; }
+      .positive { color:#059669; }
+      .negative { color:#dc2626; }
+      table { width:100%; border-collapse:collapse; margin-top:16px; }
+      th, td { padding:10px; border-bottom:1px solid #e2e8f0; text-align:left; }
+      th { background:#f1f5f9; font-weight:600; color:#475569; }
+      .scenario { padding:12px; margin:8px 0; border-radius:8px; border:1px solid #e2e8f0; }
+      .scenario.pessimistic { background:#fef2f2; border-color:#fecaca; }
+      .scenario.realistic { background:#eff6ff; border-color:#bfdbfe; }
+      .scenario.optimistic { background:#ecfdf5; border-color:#bbf7d0; }
+      .insight { display:flex; align-items:start; gap:8px; margin:8px 0; padding:8px; background:#f8fafc; border-radius:6px; }
+      .insight-icon { margin-top:2px; }
+      .footer { margin-top:40px; padding-top:20px; border-top:1px solid #e2e8f0; text-align:center; color:#64748b; font-size:12px; }
+    </style>
+  </head>
+  <body>
+    <h1>📈 Análisis de ROI - Retorno de Inversión</h1>
+    <p style="color:#64748b">Generado el ${currentDate}</p>
+    
+    <h2>📊 Métricas Principales</h2>
+    <div class="grid">
+      <div class="card ${result.analysis.investment_grade}">
+        <div class="label">ROI Simple</div>
+        <div class="value large ${result.metrics.simple_roi >= 0 ? 'positive' : 'negative'}">${result.metrics.simple_roi.toFixed(2)}%</div>
+      </div>
+      <div class="card">
+        <div class="label">ROI Anualizado</div>
+        <div class="value">${result.metrics.annualized_roi.toFixed(2)}%</div>
+      </div>
+      <div class="card">
+        <div class="label">Período de Recuperación</div>
+        <div class="value">${result.metrics.payback_period_months ? `${result.metrics.payback_period_months.toFixed(1)} meses` : 'No se recupera'}</div>
+      </div>
+      <div class="card">
+        <div class="label">Valor Presente Neto</div>
+        <div class="value ${result.metrics.npv >= 0 ? 'positive' : 'negative'}">$${result.metrics.npv.toLocaleString()}</div>
+      </div>
+      <div class="card">
+        <div class="label">Inversión Total</div>
+        <div class="value">$${result.metrics.total_investment.toLocaleString()}</div>
+      </div>
+      <div class="card">
+        <div class="label">Retornos Totales</div>
+        <div class="value">$${result.metrics.total_returns.toLocaleString()}</div>
+      </div>
+      <div class="card">
+        <div class="label">Ganancia Neta</div>
+        <div class="value ${result.metrics.profit >= 0 ? 'positive' : 'negative'}">$${result.metrics.profit.toLocaleString()}</div>
+      </div>
+      ${result.metrics.irr ? `
+      <div class="card">
+        <div class="label">TIR</div>
+        <div class="value">${(result.metrics.irr * 100).toFixed(2)}%</div>
+      </div>` : ''}
+    </div>
+
+    <h2>🎯 Análisis de Inversión</h2>
+    <div class="card ${result.analysis.investment_grade}" style="text-align:left;">
+      <div style="display:flex; align-items:center; gap:8px; margin-bottom:12px;">
+        <span style="font-size:24px;">
+          ${result.analysis.investment_grade === 'excellent' ? '🌟' :
+            result.analysis.investment_grade === 'good' ? '✅' :
+            result.analysis.investment_grade === 'fair' ? '⚠️' :
+            result.analysis.investment_grade === 'poor' ? '📉' : '🚨'}
+        </span>
+        <span style="font-weight:600; text-transform:capitalize;">${result.analysis.investment_grade === 'excellent' ? 'Excelente' :
+          result.analysis.investment_grade === 'good' ? 'Buena' :
+          result.analysis.investment_grade === 'fair' ? 'Regular' :
+          result.analysis.investment_grade === 'poor' ? 'Pobre' : 'Evitar'}</span>
+        <span style="padding:2px 8px; border-radius:12px; font-size:11px; background:rgba(0,0,0,0.1);">
+          Riesgo ${result.analysis.risk_level === 'low' ? 'Bajo' : result.analysis.risk_level === 'medium' ? 'Medio' : 'Alto'}
+        </span>
+      </div>
+      <p style="margin:12px 0; color:#374151;">${result.analysis.recommendation}</p>
+    </div>
+
+    <h3>💡 Insights Clave</h3>
+    ${result.analysis.key_insights.map(insight => `
+      <div class="insight">
+        <span class="insight-icon">💡</span>
+        <span>${insight}</span>
+      </div>
+    `).join('')}
+
+    <h2>📊 Análisis de Escenarios</h2>
+    ${Object.entries(result.scenarios).map(([key, scenario]) => `
+      <div class="scenario ${key}">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <span style="font-weight:600; text-transform:capitalize;">${scenario.scenario_name}</span>
+          <span style="font-weight:700; font-size:18px; color:${scenario.roi_percentage >= 0 ? '#059669' : '#dc2626'};">
+            ${scenario.roi_percentage.toFixed(2)}%
+          </span>
+        </div>
+        <div style="margin-top:8px; font-size:14px; color:#6b7280;">
+          NPV: $${scenario.npv.toLocaleString()} | 
+          Retorno Total: $${scenario.total_return.toLocaleString()} |
+          Payback: ${scenario.payback_months ? `${scenario.payback_months.toFixed(1)} meses` : 'N/A'}
+        </div>
+      </div>
+    `).join('')}
+
+    <h2>📈 Proyección Temporal</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Mes</th>
+          <th>Flujo Acumulado</th>
+          <th>Retorno Mensual</th>
+          <th>NPV</th>
+          <th>Payback Logrado</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${result.timeline.map(month => `
+          <tr>
+            <td>Mes ${month.month}</td>
+            <td style="color:${month.cumulative_cash_flow >= 0 ? '#059669' : '#dc2626'};">
+              $${month.cumulative_cash_flow.toLocaleString()}
+            </td>
+            <td>$${month.monthly_return.toLocaleString()}</td>
+            <td>$${month.net_present_value.toLocaleString()}</td>
+            <td>${month.payback_achieved ? '✅ Sí' : '❌ No'}</td>
+          </tr>
+        `).join('')}
+      </tbody>
+    </table>
+
+    <div class="footer">
+      <p>Reporte generado por Calculadora de ROI | ${currentDate}</p>
+      <p>Este análisis es una estimación basada en los datos proporcionados</p>
+    </div>
+  </body>
+  </html>`;
+
+  const blob = new Blob([html], { type: 'text/html' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `roi-analysis-${new Date().toISOString().split('T')[0]}.html`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+};
+
+export const exportROIToCSV = (result: ROIResult) => {
+  const rows: string[][] = [];
+  
+  // Métricas principales
+  rows.push(['Métrica','Valor']);
+  rows.push(['ROI Simple (%)', String(result.metrics.simple_roi)]);
+  rows.push(['ROI Anualizado (%)', String(result.metrics.annualized_roi)]);
+  rows.push(['Período de Recuperación (meses)', String(result.metrics.payback_period_months ?? 'N/A')]);
+  rows.push(['Valor Presente Neto', String(result.metrics.npv)]);
+  rows.push(['TIR (%)', String(result.metrics.irr ? (result.metrics.irr * 100) : 'N/A')]);
+  rows.push(['Inversión Total', String(result.metrics.total_investment)]);
+  rows.push(['Retornos Totales', String(result.metrics.total_returns)]);
+  rows.push(['Ganancia Neta', String(result.metrics.profit)]);
+  rows.push([]);
+  
+  // Análisis
+  rows.push(['Análisis']);
+  rows.push(['Grado de Inversión', result.analysis.investment_grade]);
+  rows.push(['Nivel de Riesgo', result.analysis.risk_level]);
+  rows.push(['Recomendación', result.analysis.recommendation]);
+  rows.push([]);
+  
+  // Escenarios
+  rows.push(['Escenarios']);
+  rows.push(['Escenario','ROI (%)','NPV','Retorno Total','Payback (meses)']);
+  Object.entries(result.scenarios).forEach(([, scenario]) => {
+    rows.push([
+      scenario.scenario_name,
+      String(scenario.roi_percentage),
+      String(scenario.npv),
+      String(scenario.total_return),
+      String(scenario.payback_months ?? 'N/A')
+    ]);
+  });
+  rows.push([]);
+  
+  // Timeline
+  rows.push(['Proyección Temporal']);
+  rows.push(['Mes','Flujo Acumulado','Retorno Mensual','NPV','Payback Logrado']);
+  result.timeline.forEach(month => {
+    rows.push([
+      String(month.month),
+      String(month.cumulative_cash_flow),
+      String(month.monthly_return),
+      String(month.net_present_value),
+      month.payback_achieved ? 'Sí' : 'No'
+    ]);
+  });
+
+  const csv = rows.map(r => r.join(',')).join('\n');
+  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `roi-analysis-${new Date().toISOString().split('T')[0]}.csv`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
 };

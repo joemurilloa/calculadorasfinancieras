@@ -6,7 +6,10 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "dev:back": "python -m uvicorn backend.app.main:app --reload --host 127.0.0.1 --port 8000",
+    "dev:all": "concurrently -k -n back,web -c blue,green \"npm:dev:back\" \"npm:dev\"",
+    "test:back": "pytest -q backend/tests"
   },
   "dependencies": {
     "@headlessui/react": "^2.2.4",
@@ -28,6 +31,7 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "concurrently": "^9",
     "eslint": "^9",
     "eslint-config-next": "15.3.5",
     "tailwindcss": "^4",

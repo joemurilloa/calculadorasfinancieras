@@ -8,6 +8,28 @@
 			"group": "build",
 			"isBackground": true,
 			"problemMatcher": []
+		},
+		{
+			"label": "Ejecutar Backend (FastAPI)",
+			"type": "shell",
+			"options": { "cwd": "${workspaceFolder}" },
+			"command": "powershell",
+			"args": [
+				"-NoProfile",
+				"-ExecutionPolicy", "Bypass",
+				"-Command",
+				"$ErrorActionPreference='Stop'; if (Test-Path .venv) { $env:Path=\"$PWD\\.venv\\Scripts;$env:Path\" }; python -m pip install --upgrade pip; python -m pip install -r backend/requirements.txt; python -m uvicorn backend.app.main:app --reload --host 127.0.0.1 --port 8000"
+			],
+			"isBackground": true,
+			"problemMatcher": []
+		},
+		{
+			"label": "Desarrollo: Front + Back",
+			"dependsOn": [
+				"Ejecutar Backend (FastAPI)",
+				"Ejecutar Frontend (Next.js)"
+			],
+			"dependsOrder": "sequence"
 		}
 	]
 }

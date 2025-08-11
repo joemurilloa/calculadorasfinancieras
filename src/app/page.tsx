@@ -4,13 +4,23 @@ import { useState } from 'react';
 import { TrendingUp, DollarSign, ArrowRight } from 'lucide-react';
 import { PricingCalculator } from '@/components/calculators/PricingCalculator';
 import { BreakevenCalculator } from '@/components/calculators/BreakevenCalculator';
+import { CashflowCalculator } from '@/components/calculators/CashflowCalculator';
+import { ROICalculator } from '@/components/calculators/ROICalculator';
 import { useDarkMode } from '@/hooks/useDarkMode';
+import { ClientOnly } from '@/components/ui/ClientOnly';
 
-type CalculatorType = 'home' | 'pricing' | 'breakeven';
+type CalculatorType = 'home' | 'pricing' | 'breakeven' | 'cashflow' | 'roi';
 
 export default function Home() {
   const [currentView, setCurrentView] = useState<CalculatorType>('home');
   const { isDarkMode, toggleDarkMode } = useDarkMode();
+
+  const handleViewChange = (view: CalculatorType) => {
+    setCurrentView(view);
+    if (typeof window !== 'undefined') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
 
   if (currentView === 'pricing') {
     return (
@@ -18,7 +28,7 @@ export default function Home() {
         <PricingCalculator />
         <div className="fixed top-6 left-6 z-50">
           <button
-            onClick={() => setCurrentView('home')}
+            onClick={() => handleViewChange('home')}
             className="apple-button-secondary px-6 py-3"
           >
             ← Volver al inicio
@@ -34,7 +44,39 @@ export default function Home() {
         <BreakevenCalculator />
         <div className="fixed top-6 left-6 z-50">
           <button
-            onClick={() => setCurrentView('home')}
+            onClick={() => handleViewChange('home')}
+            className="apple-button-secondary px-6 py-3"
+          >
+            ← Volver al inicio
+          </button>
+        </div>
+      </main>
+    );
+  }
+
+  if (currentView === 'cashflow') {
+    return (
+      <main className="min-h-screen">
+        <CashflowCalculator />
+        <div className="fixed top-6 left-6 z-50">
+          <button
+            onClick={() => handleViewChange('home')}
+            className="apple-button-secondary px-6 py-3"
+          >
+            ← Volver al inicio
+          </button>
+        </div>
+      </main>
+    );
+  }
+
+  if (currentView === 'roi') {
+    return (
+      <main className="min-h-screen">
+        <ROICalculator />
+        <div className="fixed top-6 left-6 z-50">
+          <button
+            onClick={() => handleViewChange('home')}
             className="apple-button-secondary px-6 py-3"
           >
             ← Volver al inicio
@@ -63,12 +105,18 @@ export default function Home() {
 
             {/* Dark Mode Toggle */}
             <div className="flex justify-center mb-12 animate-slide-in" style={{ animationDelay: '0.4s' }}>
-              <button
-                onClick={toggleDarkMode}
-                className="apple-button-secondary px-8 py-4 text-lg font-semibold"
-              >
-                {isDarkMode ? '☀️ Modo Claro' : '🌙 Modo Oscuro'}
-              </button>
+              <ClientOnly fallback={
+                <button className="apple-button-secondary px-8 py-4 text-lg font-semibold" disabled>
+                  🔄 Cargando...
+                </button>
+              }>
+                <button
+                  onClick={toggleDarkMode}
+                  className="apple-button-secondary px-8 py-4 text-lg font-semibold"
+                >
+                  {isDarkMode ? '☀️ Modo Claro' : '🌙 Modo Oscuro'}
+                </button>
+              </ClientOnly>
             </div>
           </div>
         </div>
@@ -81,7 +129,7 @@ export default function Home() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-20">
               {/* Pricing Calculator Card */}
               <div className="glass-card group hover:scale-105 transition-all duration-300 cursor-pointer p-8"
-                   onClick={() => setCurrentView('pricing')}>
+                   onClick={() => handleViewChange('pricing')}>
                 <div className="flex items-center mb-6">
                   <div className="p-4 rounded-xl bg-blue-100 dark:bg-blue-900/30 mr-4">
                     <DollarSign className="w-8 h-8 text-blue-600 dark:text-blue-400" />
@@ -121,7 +169,7 @@ export default function Home() {
 
               {/* Breakeven Calculator Card */}
               <div className="glass-card group hover:scale-105 transition-all duration-300 cursor-pointer p-8"
-                   onClick={() => setCurrentView('breakeven')}>
+                   onClick={() => handleViewChange('breakeven')}>
                 <div className="flex items-center mb-6">
                   <div className="p-4 rounded-xl bg-green-100 dark:bg-green-900/30 mr-4">
                     <TrendingUp className="w-8 h-8 text-green-600 dark:text-green-400" />
@@ -155,6 +203,85 @@ export default function Home() {
                   </span>
                   <span className="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 rounded-full text-sm font-medium badge-blue">
                     Gráfico CVU
+                  </span>
+                </div>
+              </div>
+
+              {/* Cashflow Calculator Card */}
+              <div className="glass-card group hover:scale-105 transition-all duration-300 cursor-pointer p-8"
+                   onClick={() => handleViewChange('cashflow')}>
+                <div className="flex items-center mb-6">
+                  <div className="p-4 rounded-xl bg-emerald-100 dark:bg-emerald-900/30 mr-4">
+                    <span className="w-8 h-8 text-emerald-600 dark:text-emerald-400">💵</span>
+                  </div>
+                  <div>
+                    <h3 className="text-2xl font-bold card-title">
+                      Flujo de Caja Mensual
+                    </h3>
+                    <p className="font-medium card-subtitle">
+                      Caja, burn y runway
+                    </p>
+                  </div>
+                </div>
+
+                <p className="mb-6 leading-relaxed text-lg card-description">
+                  Calcula tu flujo de caja neto, burn rate y meses de runway con recomendaciones automáticas.
+                </p>
+
+                <div className="flex items-center text-emerald-600 dark:text-emerald-400 font-semibold text-lg group-hover:translate-x-2 transition-transform">
+                  <span>Comenzar cálculo</span>
+                  <ArrowRight className="w-5 h-5 ml-2" />
+                </div>
+
+                <div className="mt-6 flex flex-wrap gap-2">
+                  <span className="px-3 py-1 bg-green-100 dark:bg-green-900/30 rounded-full text-sm font-medium badge-green">
+                    Ingresos/Egresos
+                  </span>
+                  <span className="px-3 py-1 bg-purple-100 dark:bg-purple-900/30 rounded-full text-sm font-medium badge-purple">
+                    Burn & Runway
+                  </span>
+                  <span className="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 rounded-full text-sm font-medium badge-blue">
+                    Análisis y tips
+                  </span>
+                </div>
+              </div>
+
+              {/* ROI Calculator Card */}
+              <div className="glass-card group hover:scale-105 transition-all duration-300 cursor-pointer p-8"
+                   onClick={() => handleViewChange('roi')}>
+                <div className="flex items-center mb-6">
+                  <div className="p-4 rounded-xl bg-purple-100 dark:bg-purple-900/30 mr-4">
+                    <span className="w-8 h-8 text-purple-600 dark:text-purple-400">📈</span>
+                  </div>
+                  <div>
+                    <h3 className="text-2xl font-bold card-title">
+                      ROI - Retorno de Inversión
+                    </h3>
+                    <p className="font-medium card-subtitle">
+                      Análisis de rentabilidad
+                    </p>
+                  </div>
+                </div>
+
+                <p className="mb-6 leading-relaxed text-lg card-description">
+                  Evalúa la rentabilidad de tus inversiones con análisis completo de retorno, 
+                  escenarios proyectados y recomendaciones estratégicas.
+                </p>
+
+                <div className="flex items-center text-purple-600 dark:text-purple-400 font-semibold text-lg group-hover:translate-x-2 transition-transform">
+                  <span>Comenzar análisis</span>
+                  <ArrowRight className="w-5 h-5 ml-2" />
+                </div>
+
+                <div className="mt-6 flex flex-wrap gap-2">
+                  <span className="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 rounded-full text-sm font-medium badge-blue">
+                    ROI & NPV
+                  </span>
+                  <span className="px-3 py-1 bg-green-100 dark:bg-green-900/30 rounded-full text-sm font-medium badge-green">
+                    Payback Period
+                  </span>
+                  <span className="px-3 py-1 bg-orange-100 dark:bg-orange-900/30 rounded-full text-sm font-medium badge-orange">
+                    Escenarios múltiples
                   </span>
                 </div>
               </div>

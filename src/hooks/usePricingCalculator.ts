@@ -1,4 +1,5 @@
 import { useState, useCallback, useMemo } from 'react';
+import { API_BASE_URL } from '@/lib/config';
 
 export interface PricingData {
   productName: string;
@@ -142,6 +143,11 @@ export const usePricingCalculator = () => {
       ? competitorPricesArray.reduce((a, b) => a + b) / competitorPricesArray.length 
       : 0;
 
+    const sortedCompetitor = [...competitorPricesArray].sort((a,b)=>a-b);
+    const median = sortedCompetitor.length > 0
+      ? sortedCompetitor[Math.floor(sortedCompetitor.length / 2)]
+      : undefined;
+
     return {
       recommendedPrice,
       costBreakdown: {
@@ -156,7 +162,7 @@ export const usePricingCalculator = () => {
         minPrice: competitorPricesArray.length > 0 ? Math.min(...competitorPricesArray) : undefined,
         maxPrice: competitorPricesArray.length > 0 ? Math.max(...competitorPricesArray) : undefined,
         avgPrice: avgCompetitorPrice || undefined,
-        medianPrice: competitorPricesArray.length > 0 ? competitorPricesArray.sort()[Math.floor(competitorPricesArray.length / 2)] : undefined
+        medianPrice: median
       },
       pricingStrategies: [
         {
@@ -212,8 +218,8 @@ export const usePricingCalculator = () => {
         competitor_prices: competitorPricesArray.length > 0 ? competitorPricesArray : null
       };
 
-      // Llamada real a la API del backend
-      const response = await fetch('http://localhost:8000/api/v1/pricing/calculate', {
+      // Llamada real a la API del backend (configurable)
+      const response = await fetch(`${API_BASE_URL}/api/v1/pricing/calculate`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

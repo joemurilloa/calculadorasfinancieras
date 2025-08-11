@@ -282,7 +282,11 @@ export const BreakevenCalculator: React.FC = () => {
       
       {/* Floating Action Button */}
       <FloatingActionButton
-        onNewCalculation={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+        onNewCalculation={() => {
+          if (typeof window !== 'undefined') {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }
+        }}
         onExportPDF={() => result && exportBreakevenToPDF(result, formData)}
         onReset={resetCalculator}
         hasResults={!!result}

@@ -29,85 +29,61 @@ Plataforma web full-stack para emprendedores freelances con calculadoras financi
 ## 🛠️ Tecnologías
 
 ### Frontend
-- **Next.js 15**: Framework React con App Router
-- **TypeScript**: Tipado estricto para mayor confiabilidad
-- **Tailwind CSS**: Styling utilitario y responsive
-- **Recharts**: Gráficos interactivos y profesionales
-- **Lucide React**: Iconografía moderna y consistente
+- **Next.js 15** con App Router y TypeScript
+- **Tailwind CSS v4** (config simplificada con @plugin y @theme)
+- **Recharts** y **Lucide React**
 
 ### Backend
-- **FastAPI**: API moderna y rápida con validación automática
-- **Vercel Serverless**: Deploy automático como funciones serverless  
-- **Pydantic**: Validación robusta de datos de entrada
-- **Python 3.9**: Runtime optimizado para Vercel
-- **CORS configurado**: Acceso seguro desde el frontend
+- **FastAPI** (servidor consolidado en `backend/`)
+- **Pydantic** y **Uvicorn**
+- **Sin dependencias pesadas innecesarias** (se usa `statistics` de stdlib)
 
 ### Arquitectura
-- **Frontend**: Next.js desplegado en Vercel
-- **Backend**: FastAPI como funciones serverless en Vercel
-- **Base de datos**: PostgreSQL en producción (opcional)
-- **Caching**: Vercel Edge Network
+- **Frontend**: Vercel / local
+- **Backend**: FastAPI propio (Railway/VM/contendor) o local en `127.0.0.1:8000`
 
 ## 🌐 API Endpoints
 
-### Calculadora de Precios
-- `POST /api/v1/pricing/calculate`: Calcular precio ideal
-- `GET /api/health`: Estado de la API
+- `POST /api/v1/pricing/calculate` – Precio ideal
+- `GET /health` – Estado del API
 
-### Calculadora de Punto de Equilibrio  
-- `POST /api/v1/breakeven/calculate`: Calcular punto de equilibrio
+## ⚙️ Configuración
 
-### Monitoreo
-- `GET /api`: Información general de la API
+Crea `.env.local` en la raíz:
 
-## 📊 Calculadoras Disponibles
-
-### ✅ Calculadora de Precio Ideal
-- Análisis de costos (materiales, mano de obra, gastos generales)
-- Cálculo de margen de ganancia deseado
-- Análisis competitivo automático
-- Múltiples estrategias de precios
-- Proyecciones financieras
-
-### 🔜 Próximas Calculadoras
-- Calculadora de ROI
-- Calculadora de Flujo de Caja
-- Calculadora de Punto de Equilibrio
-- Calculadora de Presupuesto
-- Calculadora de Inversiones
-
-## 🎨 Diseño
-
-Inspirado en el ecosistema Apple con principios de:
-- **Minimalismo**: Interfaz limpia sin elementos innecesarios
-- **Funcionalidad**: Cada elemento tiene un propósito claro
-- **Accesibilidad**: Colores contrastados y navegación por teclado
-- **Responsive**: Mobile-first, adaptable a todas las pantallas
-
-## 🚀 Instalación y Desarrollo
-
-### Frontend
-```bash
-# Instalar dependencias
-npm install
-
-# Ejecutar en desarrollo
-npm run dev
-
-# Build para producción
-npm run build
+```ini
+# Frontend -> Backend base URL
+# Directo al backend local:
+NEXT_PUBLIC_API_URL=http://127.0.0.1:8000
+# o usa proxy interno de Next en dev:
+# NEXT_PUBLIC_API_URL=/api
 ```
 
-### Backend
+Si usas `/api`, `next.config.ts` reescribe a `http://127.0.0.1:8000` en desarrollo.
+
+## 🚀 Desarrollo
+
+### Con VS Code (recomendado)
+- Tareas: `Desarrollo: Front + Back` (levanta FastAPI y Next.js)
+
+### Vía scripts
 ```bash
-# Navegar al directorio backend
-cd backend
+# Frontend
+npm install
+npm run dev
 
-# Instalar dependencias
-pip install -r requirements.txt
+# Backend
+python -m pip install --upgrade pip
+pip install -r backend/requirements.txt
+python -m uvicorn backend.app.main:app --reload --host 127.0.0.1 --port 8000
 
-# Ejecutar servidor
-uvicorn app.main:app --reload
+# Ambos (Windows PowerShell)
+npm run dev:all
+```
+
+### Pruebas Backend
+```bash
+npm run test:back
 ```
 
 ## 📁 Estructura del Proyecto
@@ -115,44 +91,28 @@ uvicorn app.main:app --reload
 ```
 calculadoras/
 ├── src/
-│   ├── app/                 # App Router de Next.js
+│   ├── app/
 │   ├── components/
-│   │   ├── ui/             # Componentes UI reutilizables
-│   │   └── calculators/    # Calculadoras específicas
-│   └── lib/                # Utilidades y helpers
+│   │   ├── ui/
+│   │   └── calculators/
+│   └── lib/
 ├── backend/
 │   ├── app/
-│   │   ├── routers/        # Endpoints de API
-│   │   ├── models/         # Modelos de datos
-│   │   └── services/       # Lógica de negocio
-│   └── tests/              # Tests del backend
-├── public/                 # Archivos estáticos
-└── .github/                # GitHub Actions y configuración
+│   │   ├── routers/
+│   │   └── main.py
+│   └── tests/
+├── public/
+└── .github/
 ```
 
-## 🎯 Roadmap
+## 🧪 CI
+- GitHub Actions ejecuta tests de backend (Python 3.12) y lint del frontend en cada PR a `main`.
 
-- [ ] Integración con APIs de datos financieros en tiempo real
-- [ ] Sistema de autenticación y perfiles de usuario
-- [ ] Exportación de resultados en PDF/Excel
-- [ ] Dashboard personalizado para cada usuario
-- [ ] Modo oscuro
-- [ ] Aplicación móvil con React Native
-
-## 🤝 Contribuir
-
-¡Las contribuciones son bienvenidas! Por favor lee las guías de contribución antes de enviar un PR.
-
-## 📄 Licencia
-
-Este proyecto está bajo la Licencia MIT. Ver el archivo `LICENSE` para más detalles.
-
-## 🔗 Enlaces
-
-- **Frontend**: Desplegado en Vercel
-- **Backend**: Desplegado en Railway
-- **Documentación**: [Próximamente]
+## 🎯 Roadmap breve
+- [ ] E2E básicos del frontend
+- [ ] Añadir endpoints adicionales (ROI, flujo de caja)
+- [ ] Deploy del backend (Railway / Fly.io / VM Docker)
 
 ---
 
-Hecho con ❤️ para emprendedores que buscan tomar decisiones financieras inteligentes.
+Hecho con ❤️ para emprendedores que toman decisiones financieras inteligentes.

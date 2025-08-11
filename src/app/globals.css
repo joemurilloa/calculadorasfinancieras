@@ -1,4 +1,5 @@
- @import "tailwindcss";
+@import "tailwindcss";
+@plugin "@tailwindcss/forms";
 
 :root {
   --background: 248 250 252;
@@ -35,8 +36,18 @@ body {
 /* Dark mode styles */
 .dark body {
   @apply text-slate-100;
-  background: #000000;
+  background: #0f172a;
   color: #ffffff;
+}
+
+/* Fondo azul oscuro para calculadoras en modo oscuro */
+.dark {
+  background-color: #0f172a !important;
+  background-image: linear-gradient(135deg, #0f172a 0%, #1e293b 100%) !important;
+}
+
+.dark .container {
+  background: transparent !important;
 }
 
 /* Micro-animations */
@@ -123,7 +134,7 @@ body {
   
   .dark .glass-card {
     @apply bg-slate-800/60 backdrop-blur-xl border border-slate-700/30;
-    background: linear-gradient(135deg, rgba(30, 41, 59, 0.8) 0%, rgba(30, 41, 59, 0.6) 100%);
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.8) 0%, rgba(30, 41, 59, 0.6) 100%) !important;
     color: #f8fafc;
     box-shadow: 
       0 1px 3px rgba(0, 0, 0, 0.3),
@@ -145,7 +156,7 @@ body {
   
   .dark .glass-card-strong {
     @apply bg-slate-800/90 backdrop-blur-2xl border border-slate-600/50;
-    background: linear-gradient(135deg, rgba(30, 41, 59, 0.95) 0%, rgba(30, 41, 59, 0.85) 100%);
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(30, 41, 59, 0.85) 100%) !important;
     color: #f8fafc;
     box-shadow: 
       0 2px 4px rgba(0, 0, 0, 0.4),
@@ -698,7 +709,7 @@ label {
 }
 
 .dark .glass-card-strong .text-slate-400 {
-  color: #94a3b8 !important;
+  color: #cbd5e1 !important;
 }
 
 .glass-card-strong .text-slate-600 {
@@ -706,7 +717,7 @@ label {
 }
 
 .dark .glass-card-strong .text-slate-300 {
-  color: #cbd5e1 !important;
+  color: #e2e8f0 !important;
 }
 
 /* Vista previa específica */
@@ -723,7 +734,60 @@ label {
 }
 
 .dark .glass-card-strong .text-sm {
+  color: #cbd5e1 !important;
+}
+
+/* Mejorar contraste en modo oscuro para todos los elementos */
+.dark .text-slate-600 {
+  color: #cbd5e1 !important;
+}
+
+.dark .text-slate-500 {
   color: #94a3b8 !important;
+}
+
+.dark .text-slate-400 {
+  color: #cbd5e1 !important;
+}
+
+.dark .text-slate-300 {
+  color: #e2e8f0 !important;
+}
+
+.dark .text-slate-200 {
+  color: #f1f5f9 !important;
+}
+
+.dark .text-slate-100 {
+  color: #f8fafc !important;
+}
+
+.dark .text-slate-50 {
+  color: #ffffff !important;
+}
+
+/* Asegurar legibilidad en placeholders y elementos de formulario */
+.dark .apple-input {
+  color: #f1f5f9 !important;
+}
+
+.dark .apple-input::placeholder {
+  color: #94a3b8 !important;
+}
+
+/* Mejorar contraste en textos dentro de cards */
+.dark .glass-card .text-slate-700,
+.dark .glass-card-strong .text-slate-700,
+.dark .metric-card .text-slate-700,
+.dark .cost-breakdown-item .text-slate-700 {
+  color: #e2e8f0 !important;
+}
+
+.dark .glass-card .text-slate-900,
+.dark .glass-card-strong .text-slate-900,
+.dark .metric-card .text-slate-900,
+.dark .cost-breakdown-item .text-slate-900 {
+  color: #f8fafc !important;
 }
 
 /* Mobile optimizations */
@@ -759,5 +823,668 @@ label {
   
   .dark .metric-card {
     @apply bg-slate-800/70 border-slate-600/50 text-slate-100;
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.8) 0%, rgba(30, 41, 59, 0.7) 100%) !important;
   }
+
+  .dark .cost-breakdown-item {
+    @apply bg-slate-800/70 border-slate-600/50;
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.8) 0%, rgba(30, 41, 59, 0.7) 100%) !important;
+  }
+
+  .dark .dashboard-card {
+    @apply bg-slate-800/95 border-slate-600/50;
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.98) 0%, rgba(30, 41, 59, 0.95) 100%) !important;
+  }
+
+  .dark .result-card {
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(30, 41, 59, 0.9) 100%) !important;
+    border: 1px solid rgba(71, 85, 105, 0.3) !important;
+  }
+
+  .dark .kpi-card {
+    @apply bg-gradient-to-br from-slate-800/95 to-slate-900/95 border-slate-600/50;
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(30, 41, 59, 0.9) 100%) !important;
+  }
+
+  .dark .strategy-card {
+    @apply bg-slate-800/70 border-slate-700/50 shadow-xl;
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.8) 0%, rgba(30, 41, 59, 0.7) 100%) !important;
+  }
+
+  /* Forzar fondo azul oscuro en todos los contenedores principales */
+  .dark .container.mx-auto {
+    background: transparent !important;
+  }
+
+  .dark .max-w-4xl {
+    background: transparent !important;
+  }
+
+  .dark .space-y-12,
+  .dark .space-y-8,
+  .dark .space-y-6 {
+    background: transparent !important;
+  }
+
+  .dark .grid {
+    background: transparent !important;
+  }
+
+  /* Asegurar que las secciones de input y resultados mantengan el fondo azul */
+  .dark section {
+    background: transparent !important;
+  }
+
+  .dark .pb-20,
+  .dark .-mt-12 {
+    background: transparent !important;
+  }
+
+  /* Estilos específicos para inputs de ingresos en cashflow */
+  .dark .rounded-2xl {
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.8) 0%, rgba(30, 41, 59, 0.7) 100%) !important;
+  }
+
+  .dark .bg-slate-50 {
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.8) 0%, rgba(30, 41, 59, 0.7) 100%) !important;
+  }
+
+  .dark .bg-slate-100 {
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.8) 0%, rgba(30, 41, 59, 0.7) 100%) !important;
+  }
+
+  .dark .bg-white\/80 {
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.8) 0%, rgba(30, 41, 59, 0.7) 100%) !important;
+  }
+
+  /* Inputs específicos de la calculadora de flujo de caja */
+  .dark .bg-slate-700\/50 {
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.8) 0%, rgba(30, 41, 59, 0.7) 100%) !important;
+  }
+
+  /* Estilos específicos para asegurar fondo azul oscuro consistente en todas las calculadoras */
+  .dark .min-h-screen {
+    background: #0f172a !important;
+    background-image: linear-gradient(135deg, #0f172a 0%, #1e293b 100%) !important;
+  }
+
+  .dark main {
+    background: transparent !important;
+  }
+
+  .dark .py-20,
+  .dark .py-16,
+  .dark .py-12 {
+    background: transparent !important;
+  }
+
+  /* Asegurar que todas las secciones de calculadoras mantengan el fondo azul */
+  .dark .bg-gray-50,
+  .dark .bg-slate-50,
+  .dark .bg-slate-100,
+  .dark .bg-white {
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.8) 0%, rgba(30, 41, 59, 0.7) 100%) !important;
+    border: 1px solid rgba(71, 85, 105, 0.3) !important;
+  }
+
+  /* Forzar fondo azul en contenedores específicos de ingresos/formularios */
+  .dark .bg-white\/50,
+  .dark .bg-white\/60,
+  .dark .bg-white\/70,
+  .dark .bg-white\/80,
+  .dark .bg-white\/90 {
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.8) 0%, rgba(30, 41, 59, 0.7) 100%) !important;
+    border: 1px solid rgba(71, 85, 105, 0.3) !important;
+  }
+
+  /* Específicos para inputs de ingresos dinámicos */
+  .dark [style*="background-color: rgb(248 250 252"] {
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.8) 0%, rgba(30, 41, 59, 0.7) 100%) !important;
+  }
+
+  .dark [style*="background-color: rgb(241 245 249"] {
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.8) 0%, rgba(30, 41, 59, 0.7) 100%) !important;
+  }
+
+  /* Asegurar legibilidad de texto en todos los contextos */
+  .dark .text-gray-900,
+  .dark .text-slate-900,
+  .dark .text-black {
+    color: #f8fafc !important;
+  }
+
+  .dark .text-gray-800,
+  .dark .text-slate-800 {
+    color: #f1f5f9 !important;
+  }
+
+  .dark .text-gray-700,
+  .dark .text-slate-700 {
+    color: #e2e8f0 !important;
+  }
+
+  .dark .text-gray-600,
+  .dark .text-slate-600 {
+    color: #cbd5e1 !important;
+  }
+
+  .dark .text-gray-500,
+  .dark .text-slate-500 {
+    color: #94a3b8 !important;
+  }
+
+  /* Mejorar contraste en placeholder text */
+  .dark input::placeholder,
+  .dark textarea::placeholder {
+    color: #94a3b8 !important;
+  }
+
+  /* Estilos para elementos específicos que aparecen en gris */
+  .dark .bg-gray-100\/50,
+  .dark .bg-slate-100\/50 {
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.8) 0%, rgba(30, 41, 59, 0.7) 100%) !important;
+  }
+
+  /* Override para cualquier fondo gris que pueda aparecer */
+  .dark [class*="bg-gray"],
+  .dark [class*="bg-slate"] {
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.8) 0%, rgba(30, 41, 59, 0.7) 100%) !important;
+  }
+
+  /* Excluir botones y elementos específicos que deben mantener sus colores */
+  .dark button[class*="bg-blue"],
+  .dark button[class*="bg-green"],
+  .dark button[class*="bg-red"],
+  .dark .apple-button-primary,
+  .dark .apple-button-secondary {
+    background: revert !important;
+  }
+
+  /* Asegurar que los badges mantengan sus colores distintivos */
+  .dark .bg-blue-100,
+  .dark .bg-green-100,
+  .dark .bg-purple-100,
+  .dark .bg-red-100,
+  .dark .bg-orange-100 {
+    background: revert !important;
+  }
+
+  /* === NUEVOS ESTILOS PARA CONSISTENCIA DE FONDO AZUL OSCURO === */
+  
+  /* Asegurar fondo azul oscuro en TODOS los elementos de calculadoras */
+  .dark div[class*="bg-white"],
+  .dark div[class*="bg-slate"],
+  .dark div[class*="bg-gray"] {
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.85) 0%, rgba(30, 41, 59, 0.8) 100%) !important;
+  }
+
+  /* Secciones específicas que aparecen en las calculadoras */
+  .dark section,
+  .dark .space-y-8 > div,
+  .dark .space-y-6 > div,
+  .dark .grid > div {
+    background: transparent !important;
+  }
+
+  /* Cards y contenedores de resultados con fondo azul fuerte */
+  .dark .rounded-3xl,
+  .dark .rounded-2xl,
+  .dark .rounded-xl {
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.9) 0%, rgba(30, 41, 59, 0.85) 100%) !important;
+    border: 1px solid rgba(71, 85, 105, 0.4) !important;
+  }
+
+  /* Inputs específicos con mejor contraste */
+  .dark input,
+  .dark select,
+  .dark textarea {
+    background: rgba(15, 23, 42, 0.7) !important;
+    border: 1px solid rgba(71, 85, 105, 0.5) !important;
+    color: #f1f5f9 !important;
+  }
+
+  .dark input::placeholder {
+    color: #94a3b8 !important;
+  }
+
+  /* Botones con estilo Apple pero en azul */
+  .dark button:not(.apple-button-primary) {
+    background: rgba(30, 41, 59, 0.8) !important;
+    border: 1px solid rgba(71, 85, 105, 0.5) !important;
+    color: #f1f5f9 !important;
+  }
+
+  .dark button:not(.apple-button-primary):hover {
+    background: rgba(30, 41, 59, 0.9) !important;
+    border-color: rgba(71, 85, 105, 0.7) !important;
+    transform: translateY(-1px);
+  }
+
+  /* Asegurar que TODOS los textos sean legibles */
+  .dark * {
+    border-color: rgba(71, 85, 105, 0.3) !important;
+  }
+
+  .dark p,
+  .dark span:not([class*="text-"]),
+  .dark div:not([class*="text-"]),
+  .dark label {
+    color: #f1f5f9 !important;
+  }
+
+  .dark h1, .dark h2, .dark h3, .dark h4, .dark h5, .dark h6 {
+    color: #ffffff !important;
+  }
+
+  /* Específico para evitar que los elementos inline tengan fondos raros */
+  .dark .inline-flex,
+  .dark .flex {
+    background: transparent !important;
+  }
+
+  /* Tooltips y elementos flotantes */
+  .dark [data-tooltip],
+  .dark .tooltip {
+    background: rgba(15, 23, 42, 0.95) !important;
+    border: 1px solid rgba(71, 85, 105, 0.5) !important;
+    color: #f1f5f9 !important;
+  }
+
+  /* Scrollbars personalizados para el tema azul */
+  .dark ::-webkit-scrollbar {
+    width: 8px;
+    background: rgba(15, 23, 42, 0.5);
+  }
+
+  .dark ::-webkit-scrollbar-thumb {
+    background: rgba(71, 85, 105, 0.7);
+    border-radius: 4px;
+  }
+
+  .dark ::-webkit-scrollbar-thumb:hover {
+    background: rgba(71, 85, 105, 0.9);
+  }
+
+  /* Asegurar que las calculadoras específicas mantengan el tema */
+  .dark .calculator-container,
+  .dark .form-section,
+  .dark .results-section,
+  .dark .input-group {
+    background: rgba(15, 23, 42, 0.8) !important;
+  }
+
+  /* Override para cualquier estilo inline que pueda interferir */
+  .dark [style*="background"] {
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.8) 0%, rgba(30, 41, 59, 0.7) 100%) !important;
+  }
+
+  /* Específico para la calculadora de flujo de caja que se ve en la imagen */
+  .dark .max-w-4xl > div,
+  .dark .max-w-6xl > div {
+    background: transparent !important;
+  }
+
+  /* Asegurar que las métricas y KPIs se vean correctos */
+  .dark .metric-value,
+  .dark .kpi-value {
+    color: #ffffff !important;
+    font-weight: 700;
+  }
+
+  .dark .metric-label,
+  .dark .kpi-label {
+    color: #cbd5e1 !important;
+  }
+
+  /* === ESTILOS ESPECÍFICOS PARA BOTONES CALCULAR === */
+  
+  /* Botones principales de cálculo con estilo Apple premium */
+  .dark button[class*="apple-button"]:not(.apple-button-secondary) {
+    background: linear-gradient(135deg, #007AFF 0%, #0051D5 100%) !important;
+    border: none !important;
+    color: #ffffff !important;
+    font-weight: 600 !important;
+    box-shadow: 
+      0 4px 12px rgba(0, 122, 255, 0.3),
+      0 2px 6px rgba(0, 122, 255, 0.2),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+  }
+
+  .dark button[class*="apple-button"]:not(.apple-button-secondary):hover {
+    background: linear-gradient(135deg, #0066CC 0%, #004BB8 100%) !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 
+      0 6px 20px rgba(0, 122, 255, 0.4),
+      0 4px 12px rgba(0, 122, 255, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+  }
+
+  .dark button[class*="apple-button"]:not(.apple-button-secondary):active {
+    transform: translateY(-1px) !important;
+    box-shadow: 
+      0 2px 8px rgba(0, 122, 255, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+  }
+
+  /* Botones principales de calcular - usando clases de Tailwind específicas */
+  .dark button[class*="bg-blue"],
+  .dark button[class*="bg-green"],
+  .dark .calculate-button {
+    background: linear-gradient(135deg, #007AFF 0%, #0051D5 100%) !important;
+    border: none !important;
+    color: #ffffff !important;
+    font-weight: 600 !important;
+    border-radius: 16px !important;
+    padding: 16px 32px !important;
+    font-size: 16px !important;
+    box-shadow: 
+      0 4px 12px rgba(0, 122, 255, 0.3),
+      0 2px 6px rgba(0, 122, 255, 0.2),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+    transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
+  }
+
+  .dark button[class*="bg-blue"]:hover,
+  .dark button[class*="bg-green"]:hover,
+  .dark .calculate-button:hover {
+    background: linear-gradient(135deg, #0066CC 0%, #004BB8 100%) !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 
+      0 6px 20px rgba(0, 122, 255, 0.4),
+      0 4px 12px rgba(0, 122, 255, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+  }
+
+  /* Botones específicos por clases exactas */
+  .dark .bg-blue-600,
+  .dark .bg-green-600,
+  .dark .bg-purple-600,
+  .dark button[class*="bg-blue-6"],
+  .dark button[class*="bg-green-6"],
+  .dark button[class*="bg-purple-6"] {
+    background: linear-gradient(135deg, #007AFF 0%, #0051D5 100%) !important;
+    border: none !important;
+    color: #ffffff !important;
+    font-weight: 600 !important;
+    box-shadow: 
+      0 4px 12px rgba(0, 122, 255, 0.3),
+      0 2px 6px rgba(0, 122, 255, 0.2),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+    transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
+  }
+
+  .dark .bg-blue-600:hover,
+  .dark .bg-green-600:hover,
+  .dark .bg-purple-600:hover,
+  .dark button[class*="bg-blue-6"]:hover,
+  .dark button[class*="bg-green-6"]:hover,
+  .dark button[class*="bg-purple-6"]:hover {
+    background: linear-gradient(135deg, #0066CC 0%, #004BB8 100%) !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 
+      0 6px 20px rgba(0, 122, 255, 0.4),
+      0 4px 12px rgba(0, 122, 255, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+  }
+
+  /* === ESTILOS ESPECÍFICOS PARA CALCULADORA DE FLUJO DE CAJA === */
+  
+  /* Contenedor principal de la calculadora de flujo de caja - MODO CLARO */
+  .cashflow-calculator {
+    color: #1f2937 !important;
+  }
+  
+  .cashflow-calculator h2,
+  .cashflow-calculator h3,
+  .cashflow-calculator h4 {
+    color: #1f2937 !important;
+  }
+  
+  .cashflow-calculator label {
+    color: #374151 !important;
+  }
+  
+  .cashflow-calculator .text-slate-600,
+  .cashflow-calculator .text-slate-700,
+  .cashflow-calculator [class*="text-slate"] {
+    color: #4b5563 !important;
+  }
+  
+  .cashflow-calculator .font-semibold {
+    color: #1f2937 !important;
+  }
+  
+  /* Contenedor principal de la calculadora de flujo de caja - MODO OSCURO */
+  .dark .cashflow-calculator,
+  .dark [class*="CashflowCalculator"] {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%) !important;
+  }
+
+  /* Cards específicas de la calculadora de flujo de caja */
+  .dark .cashflow-calculator .card,
+  .dark .cashflow-calculator [role="region"],
+  .dark .cashflow-calculator .bg-white,
+  .dark .cashflow-calculator .bg-slate-50,
+  .dark .cashflow-calculator [class*="bg-slate-50"],
+  .dark .cashflow-calculator [class*="bg-slate-800"],
+  .dark .cashflow-calculator [class*="glass-card"],
+  .dark .cashflow-calculator .apple-card,
+  .dark .cashflow-calculator .glass-card-strong {
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.9) 0%, rgba(30, 41, 59, 0.85) 100%) !important;
+    border: 1px solid rgba(71, 85, 105, 0.4) !important;
+    backdrop-filter: blur(10px) !important;
+  }
+
+  /* Inputs específicos de la calculadora de flujo de caja */
+  .dark .cashflow-calculator input,
+  .dark .cashflow-calculator select,
+  .dark .cashflow-calculator textarea {
+    background: rgba(15, 23, 42, 0.8) !important;
+    border: 1px solid rgba(71, 85, 105, 0.5) !important;
+    color: #f1f5f9 !important;
+  }
+
+  .dark .cashflow-calculator input:focus,
+  .dark .cashflow-calculator select:focus,
+  .dark .cashflow-calculator textarea:focus {
+    background: rgba(15, 23, 42, 0.9) !important;
+    border-color: #3b82f6 !important;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3) !important;
+  }
+
+  /* Secciones de ingresos, gastos, etc. */
+  .dark .cashflow-calculator .section,
+  .dark .cashflow-calculator .space-y-3,
+  .dark .cashflow-calculator .grid {
+    background: transparent !important;
+  }
+
+  /* Items dinámicos de ingresos/gastos */
+  .dark .cashflow-calculator .grid-cols-12 {
+    background: rgba(15, 23, 42, 0.6) !important;
+    border-radius: 12px !important;
+    padding: 12px !important;
+    margin-bottom: 8px !important;
+    border: 1px solid rgba(71, 85, 105, 0.3) !important;
+  }
+
+  /* Botones de agregar/eliminar en flujo de caja */
+  .dark .cashflow-calculator button[class*="text-red"] {
+    background: rgba(239, 68, 68, 0.2) !important;
+    border: 1px solid rgba(239, 68, 68, 0.4) !important;
+    color: #f87171 !important;
+  }
+
+  .dark .cashflow-calculator button[class*="text-blue"] {
+    background: rgba(59, 130, 246, 0.2) !important;
+    border: 1px solid rgba(59, 130, 246, 0.4) !important;
+    color: #60a5fa !important;
+  }
+
+  /* Resultados específicos de flujo de caja */
+  .dark .cashflow-calculator .results,
+  .dark .cashflow-calculator .chart-container {
+    background: rgba(15, 23, 42, 0.95) !important;
+    border: 1px solid rgba(71, 85, 105, 0.4) !important;
+    border-radius: 20px !important;
+    padding: 24px !important;
+  }
+
+  /* Métricas específicas del flujo de caja */
+  .dark .cashflow-calculator .metric-positive {
+    color: #4ade80 !important;
+  }
+
+  .dark .cashflow-calculator .metric-negative {
+    color: #f87171 !important;
+  }
+
+  .dark .cashflow-calculator .metric-neutral {
+    color: #60a5fa !important;
+  }
+
+  /* Área de botones y acciones */
+  .dark .cashflow-calculator [class*="bg-slate-50"],
+  .dark .cashflow-calculator [class*="bg-slate-800"],
+  .dark .cashflow-calculator .p-6,
+  .dark .cashflow-calculator .rounded-xl {
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(30, 41, 59, 0.9) 100%) !important;
+    border: 1px solid rgba(71, 85, 105, 0.4) !important;
+  }
+
+  /* Elementos de borde y separadores */
+  .dark .cashflow-calculator [class*="border-slate-200"],
+  .dark .cashflow-calculator [class*="border-slate-700"] {
+    border-color: rgba(71, 85, 105, 0.5) !important;
+  }
+
+  /* Elementos de error */
+  .dark .cashflow-calculator [class*="bg-red-50"] {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.2) 0%, rgba(220, 38, 38, 0.1) 100%) !important;
+    border-color: rgba(239, 68, 68, 0.4) !important;
+  }
+
+  /* Headers y títulos */
+  .dark .cashflow-calculator h2,
+  .dark .cashflow-calculator h3,
+  .dark .cashflow-calculator h4 {
+    color: #f1f5f9 !important;
+  }
+
+  /* Override para elementos con clases Tailwind específicas */
+  .dark .cashflow-calculator div[class*="bg-slate"],
+  .dark .cashflow-calculator section[class*="bg-slate"],
+  .dark .cashflow-calculator aside[class*="bg-slate"] {
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.9) 0%, rgba(30, 41, 59, 0.85) 100%) !important;
+    border-color: rgba(71, 85, 105, 0.4) !important;
+  }
+
+  /* Contenedores de grid y flex que podrían tener fondos grises */
+  .dark .cashflow-calculator .grid[class*="gap"],
+  .dark .cashflow-calculator .flex[class*="gap"] {
+    background: transparent !important;
+  }
+
+  /* Asegurar que el contenedor principal tenga el fondo correcto */
+  .dark .cashflow-calculator {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%) !important;
+    min-height: 100vh !important;
+  }
+}
+
+/* =================================================================
+   CASHFLOW CALCULATOR ENHANCED DARK MODE STYLES
+   ================================================================= */
+
+/* Main container */
+.dark .cashflow-calculator {
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%) !important;
+  min-height: 100vh !important;
+  padding: 24px !important;
+}
+
+/* Cards principales */
+.dark .cashflow-calculator .card,
+.dark .cashflow-calculator [class*="Card"]:not(.result-card) {
+  background: linear-gradient(135deg, #1e293b 0%, #334155 100%) !important;
+  border: 1px solid #475569 !important;
+  backdrop-filter: blur(10px) !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* Headers de las cards */
+.dark .cashflow-calculator .card-header,
+.dark .cashflow-calculator [class*="CardHeader"] {
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%) !important;
+  border-bottom: 1px solid #475569 !important;
+  color: #f1f5f9 !important;
+}
+
+/* Content areas */
+.dark .cashflow-calculator .card-content,
+.dark .cashflow-calculator [class*="CardContent"] {
+  background: rgba(30, 41, 59, 0.7) !important;
+  color: #f1f5f9 !important;
+}
+
+/* Result card específicamente */
+.dark .cashflow-calculator .result-card {
+  background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%) !important;
+  border: 2px solid #60a5fa !important;
+  box-shadow: 0 20px 40px rgba(59, 130, 246, 0.3) !important;
+}
+
+.dark .cashflow-calculator .result-card .card-header,
+.dark .cashflow-calculator .result-card [class*="CardHeader"] {
+  background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%) !important;
+  color: #f1f5f9 !important;
+}
+
+/* Grid items dinámicos */
+.dark .cashflow-calculator .grid-cols-12 {
+  background: rgba(15, 23, 42, 0.8) !important;
+  border: 1px solid rgba(71, 85, 105, 0.5) !important;
+  border-radius: 12px !important;
+  padding: 16px !important;
+  margin-bottom: 12px !important;
+  backdrop-filter: blur(5px) !important;
+}
+
+/* Inputs específicos */
+.dark .cashflow-calculator input {
+  background: rgba(15, 23, 42, 0.9) !important;
+  border: 1px solid #475569 !important;
+  color: #f1f5f9 !important;
+}
+
+.dark .cashflow-calculator input:focus {
+  border-color: #3b82f6 !important;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2) !important;
+}
+
+/* Labels */
+.dark .cashflow-calculator label {
+  color: #cbd5e1 !important;
+  font-weight: 500 !important;
+}
+
+/* Metric cards en resultados */
+.dark .cashflow-calculator [class*="bg-green-50"] {
+  background: linear-gradient(135deg, #059669 20%, #10b981 100%) !important;
+}
+
+.dark .cashflow-calculator [class*="bg-red-50"] {
+  background: linear-gradient(135deg, #dc2626 20%, #ef4444 100%) !important;
+}
+
+.dark .cashflow-calculator [class*="bg-blue-50"] {
+  background: linear-gradient(135deg, #2563eb 20%, #3b82f6 100%) !important;
+}
+
+.dark .cashflow-calculator [class*="bg-orange-50"] {
+  background: linear-gradient(135deg, #ea580c 20%, #f97316 100%) !important;
+}
+
+.dark .cashflow-calculator [class*="bg-slate-50"] {
+  background: linear-gradient(135deg, #475569 20%, #64748b 100%) !important;
 }
