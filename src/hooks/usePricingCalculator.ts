@@ -1,5 +1,5 @@
 import { useState, useCallback, useMemo } from 'react';
-import { API_BASE_URL } from '@/lib/config';
+import { PricingCalculator } from '@/lib/calculations/pricing';
 
 export interface PricingData {
   productName: string;
@@ -195,7 +195,7 @@ export const usePricingCalculator = () => {
     };
   }, [formData]);
 
-  // Optimizar la función de cálculo con useCallback
+  // Función de cálculo usando librería local
   const calculatePricing = useCallback(async () => {
     if (!validateForm()) {
       return;
@@ -204,73 +204,25 @@ export const usePricingCalculator = () => {
     setIsLoading(true);
     
     try {
+      // Preparar datos de entrada
       const competitorPricesArray = formData.competitorPrices
         .split(',')
         .map(price => parseFloat(price.trim()))
         .filter(price => !isNaN(price));
 
-      const requestData = {
-        product_name: formData.productName,
-        cost_materials: formData.costMaterials,
-        cost_labor: formData.costLabor,
-        cost_overhead: formData.costOverhead,
-        desired_profit_margin: formData.desiredProfitMargin,
-        competitor_prices: competitorPricesArray.length > 0 ? competitorPricesArray : null
+      const inputData = {
+        productName: formData.productName,
+        costMaterials: formData.costMaterials,
+        costLabor: formData.costLabor,
+        costOverhead: formData.costOverhead,
+        desiredProfitMargin: formData.desiredProfitMargin,
+        competitorPrices: competitorPricesArray.length > 0 ? competitorPricesArray : undefined
       };
 
-      // Llamada real a la API del backend (configurable)
-      const response = await fetch(`${API_BASE_URL}/api/v1/pricing/calculate`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(requestData)
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      const apiResult = await response.json();
+      // Calcular usando la librería local
+      const calculationResult = PricingCalculator.calculate(inputData);
       
-      // Transformar la respuesta del backend al formato esperado por el frontend
-      const transformedResult: PricingResult = {
-        recommendedPrice: apiResult.recommended_price,
-        costBreakdown: {
-          materials: apiResult.cost_breakdown.materials,
-          labor: apiResult.cost_breakdown.labor,
-          overhead: apiResult.cost_breakdown.overhead,
-          totalCost: apiResult.cost_breakdown.total_cost,
-          profitAmount: apiResult.cost_breakdown.profit_amount
-        },
-        profitMargin: apiResult.profit_margin,
-        competitiveAnalysis: {
-          minPrice: apiResult.competitive_analysis?.min_price,
-          maxPrice: apiResult.competitive_analysis?.max_price,
-          avgPrice: apiResult.competitive_analysis?.avg_price,
-          medianPrice: apiResult.competitive_analysis?.median_price
-        },
-        pricingStrategies: apiResult.pricing_strategies.map((strategy: {
-          name: string;
-          price: number;
-          description: string;
-          pros: string[];
-          cons: string[];
-        }) => ({
-          name: strategy.name,
-          price: strategy.price,
-          description: strategy.description,
-          pros: strategy.pros,
-          cons: strategy.cons
-        })),
-        financialProjections: {
-          monthlyRevenue100Units: apiResult.financial_projections.monthly_revenue_100_units,
-          monthlyProfit100Units: apiResult.financial_projections.monthly_profit_100_units,
-          roiPercentage: apiResult.financial_projections.roi_percentage
-        }
-      };
-
-      setResult(transformedResult);
+      setResult(calculationResult);
       
       // Scroll to results after calculation
       setTimeout(() => {
@@ -281,7 +233,7 @@ export const usePricingCalculator = () => {
       }, 100);
     } catch (error) {
       console.error('Error calculando precio:', error);
-      // Fallback a cálculo local si falla el backend
+      // Fallback a cálculo básico
       setResult(fallbackCalculation);
       
       // Scroll to results even on fallback
@@ -294,7 +246,7 @@ export const usePricingCalculator = () => {
     } finally {
       setIsLoading(false);
     }
-  }, [formData, validateForm, fallbackCalculation]);
+  }, [validateForm, fallbackCalculation, formData.productName, formData.costMaterials, formData.costLabor, formData.costOverhead, formData.desiredProfitMargin, formData.competitorPrices]);
 
   return {
     formData,

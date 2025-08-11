@@ -1,5 +1,9 @@
 import { useCallback, useMemo, useState } from 'react';
-import { API_BASE_URL } from '@/lib/config';
+import { 
+  CashflowCalculator, 
+  CashflowInput as LibraryCashflowInput,
+  CashflowResult as LibraryCashflowResult
+} from '@/lib/calculations/cashflow';
 
 export type CashItem = { name: string; amount: number };
 
@@ -112,27 +116,69 @@ export const useCashflowCalculator = () => {
     }));
   }, []);
 
+  // Función para convertir del formato del hook al formato de la librería
+  const convertToLibraryInput = useCallback((form: CashflowForm): LibraryCashflowInput => {
+    return {
+      startingCash: form.starting_cash,
+      revenue: form.revenue,
+      otherInflows: form.other_inflows,
+      cogs: form.cogs,
+      opexFixed: form.opex_fixed,
+      opexVariable: form.opex_variable,
+      payroll: form.payroll,
+      loanInterest: form.loan_interest,
+      loanPrincipal: form.loan_principal,
+      capex: form.capex,
+      otherOutflows: form.other_outflows,
+      taxRate: form.tax_rate,
+      roundTo: form.round_to
+    };
+  }, []);
+
+  // Función para convertir del resultado de la librería al formato del hook
+  const convertFromLibraryResult = useCallback((result: LibraryCashflowResult): CashflowResult => {
+    return {
+      totals: {
+        total_inflows: result.totals.totalInflows,
+        total_outflows: result.totals.totalOutflows,
+        taxes_cash: result.totals.taxesCash,
+        operating_cash_flow: result.totals.operatingCashFlow,
+        free_cash_flow: result.totals.freeCashFlow,
+        net_cash_flow: result.totals.netCashFlow,
+        ending_cash: result.totals.endingCash,
+        burn_rate: result.totals.burnRate,
+        runway_months: result.totals.runwayMonths
+      },
+      breakdown: {
+        inflows: result.breakdown.inflows,
+        outflows: result.breakdown.outflows
+      },
+      analysis: {
+        summary: result.analysis.summary,
+        risk_level: result.analysis.riskLevel,
+        recommendations: result.analysis.recommendations
+      }
+    };
+  }, []);
+
   const calculate = useCallback(async () => {
     if (!isValid) return;
     setIsLoading(true);
     try {
-      const res = await fetch(`${API_BASE_URL}/api/v1/cashflow/calculate`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(form),
-      });
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      const data: CashflowResult = await res.json();
-      setResult(data);
+      // Convertir formato y usar librería local
+      const libraryInput = convertToLibraryInput(form);
+      const libraryResult = CashflowCalculator.calculate(libraryInput);
+      const adaptedResult = convertFromLibraryResult(libraryResult);
+      setResult(adaptedResult);
       setTimeout(() => {
         document.getElementById('cashflow-results')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }, 50);
     } catch (e) {
-      console.error(e);
+      console.error('Error en cálculo de flujo de caja:', e);
     } finally {
       setIsLoading(false);
     }
-  }, [form, isValid]);
+  }, [form, isValid, convertToLibraryInput, convertFromLibraryResult]);
 
   const reset = useCallback(() => {
     setForm({

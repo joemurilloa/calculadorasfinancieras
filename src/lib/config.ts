@@ -1,3 +1,0 @@
-// Centraliza la URL base de la API del backend
-// Usa variable de entorno en tiempo de build y un fallback para desarrollo
-export const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8000';

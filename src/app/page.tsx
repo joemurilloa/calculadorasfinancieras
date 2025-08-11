@@ -6,6 +6,7 @@ import { PricingCalculator } from '@/components/calculators/PricingCalculator';
 import { BreakevenCalculator } from '@/components/calculators/BreakevenCalculator';
 import { CashflowCalculator } from '@/components/calculators/CashflowCalculator';
 import { ROICalculator } from '@/components/calculators/ROICalculator';
+import { QuickNavigation } from '@/components/ui/QuickNavigation';
 import { useDarkMode } from '@/hooks/useDarkMode';
 import { ClientOnly } from '@/components/ui/ClientOnly';
 
@@ -29,11 +30,12 @@ export default function Home() {
         <div className="fixed top-6 left-6 z-50">
           <button
             onClick={() => handleViewChange('home')}
-            className="apple-button-secondary px-6 py-3"
+            className="apple-button-secondary px-6 py-3 shadow-lg hover:shadow-xl transition-all duration-300 backdrop-blur-md bg-white/80 dark:bg-slate-800/80 border border-gray-200 dark:border-gray-700 rounded-lg"
           >
             ← Volver al inicio
           </button>
         </div>
+        <QuickNavigation currentView={currentView} onViewChange={handleViewChange} />
       </main>
     );
   }
@@ -45,11 +47,12 @@ export default function Home() {
         <div className="fixed top-6 left-6 z-50">
           <button
             onClick={() => handleViewChange('home')}
-            className="apple-button-secondary px-6 py-3"
+            className="apple-button-secondary px-6 py-3 shadow-lg hover:shadow-xl transition-all duration-300 backdrop-blur-md bg-white/80 dark:bg-slate-800/80 border border-gray-200 dark:border-gray-700 rounded-lg"
           >
             ← Volver al inicio
           </button>
         </div>
+        <QuickNavigation currentView={currentView} onViewChange={handleViewChange} />
       </main>
     );
   }
@@ -61,11 +64,12 @@ export default function Home() {
         <div className="fixed top-6 left-6 z-50">
           <button
             onClick={() => handleViewChange('home')}
-            className="apple-button-secondary px-6 py-3"
+            className="apple-button-secondary px-6 py-3 shadow-lg hover:shadow-xl transition-all duration-300 backdrop-blur-md bg-white/80 dark:bg-slate-800/80 border border-gray-200 dark:border-gray-700 rounded-lg"
           >
             ← Volver al inicio
           </button>
         </div>
+        <QuickNavigation currentView={currentView} onViewChange={handleViewChange} />
       </main>
     );
   }
@@ -77,11 +81,12 @@ export default function Home() {
         <div className="fixed top-6 left-6 z-50">
           <button
             onClick={() => handleViewChange('home')}
-            className="apple-button-secondary px-6 py-3"
+            className="apple-button-secondary px-6 py-3 shadow-lg hover:shadow-xl transition-all duration-300 backdrop-blur-md bg-white/80 dark:bg-slate-800/80 border border-gray-200 dark:border-gray-700 rounded-lg"
           >
             ← Volver al inicio
           </button>
         </div>
+        <QuickNavigation currentView={currentView} onViewChange={handleViewChange} />
       </main>
     );
   }
@@ -106,13 +111,13 @@ export default function Home() {
             {/* Dark Mode Toggle */}
             <div className="flex justify-center mb-12 animate-slide-in" style={{ animationDelay: '0.4s' }}>
               <ClientOnly fallback={
-                <button className="apple-button-secondary px-8 py-4 text-lg font-semibold" disabled>
+                <button className="apple-button-secondary px-8 py-4 text-lg font-semibold bg-gray-100 dark:bg-gray-800 rounded-full shadow-lg" disabled>
                   🔄 Cargando...
                 </button>
               }>
                 <button
                   onClick={toggleDarkMode}
-                  className="apple-button-secondary px-8 py-4 text-lg font-semibold"
+                  className="apple-button-secondary px-8 py-4 text-lg font-semibold bg-gradient-to-r from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-900 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
                 >
                   {isDarkMode ? '☀️ Modo Claro' : '🌙 Modo Oscuro'}
                 </button>
@@ -128,10 +133,10 @@ export default function Home() {
           <div className="max-w-6xl mx-auto">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-20">
               {/* Pricing Calculator Card */}
-              <div className="glass-card group hover:scale-105 transition-all duration-300 cursor-pointer p-8"
+              <div className="glass-card group hover:scale-105 transition-all duration-300 cursor-pointer p-8 border border-gray-200/50 dark:border-gray-700/50 hover:border-blue-400/50 dark:hover:border-blue-500/50"
                    onClick={() => handleViewChange('pricing')}>
                 <div className="flex items-center mb-6">
-                  <div className="p-4 rounded-xl bg-blue-100 dark:bg-blue-900/30 mr-4">
+                  <div className="p-4 rounded-xl bg-gradient-to-br from-blue-100 to-blue-200 dark:from-blue-900/30 dark:to-blue-800/30 mr-4 shadow-lg">
                     <DollarSign className="w-8 h-8 text-blue-600 dark:text-blue-400" />
                   </div>
                   <div>
@@ -168,10 +173,10 @@ export default function Home() {
               </div>
 
               {/* Breakeven Calculator Card */}
-              <div className="glass-card group hover:scale-105 transition-all duration-300 cursor-pointer p-8"
+              <div className="glass-card group hover:scale-105 transition-all duration-300 cursor-pointer p-8 border border-gray-200/50 dark:border-gray-700/50 hover:border-green-400/50 dark:hover:border-green-500/50"
                    onClick={() => handleViewChange('breakeven')}>
                 <div className="flex items-center mb-6">
-                  <div className="p-4 rounded-xl bg-green-100 dark:bg-green-900/30 mr-4">
+                  <div className="p-4 rounded-xl bg-gradient-to-br from-green-100 to-green-200 dark:from-green-900/30 dark:to-green-800/30 mr-4 shadow-lg">
                     <TrendingUp className="w-8 h-8 text-green-600 dark:text-green-400" />
                   </div>
                   <div>
@@ -208,11 +213,11 @@ export default function Home() {
               </div>
 
               {/* Cashflow Calculator Card */}
-              <div className="glass-card group hover:scale-105 transition-all duration-300 cursor-pointer p-8"
+              <div className="glass-card group hover:scale-105 transition-all duration-300 cursor-pointer p-8 border border-gray-200/50 dark:border-gray-700/50 hover:border-emerald-400/50 dark:hover:border-emerald-500/50"
                    onClick={() => handleViewChange('cashflow')}>
                 <div className="flex items-center mb-6">
-                  <div className="p-4 rounded-xl bg-emerald-100 dark:bg-emerald-900/30 mr-4">
-                    <span className="w-8 h-8 text-emerald-600 dark:text-emerald-400">💵</span>
+                  <div className="p-4 rounded-xl bg-gradient-to-br from-emerald-100 to-emerald-200 dark:from-emerald-900/30 dark:to-emerald-800/30 mr-4 shadow-lg">
+                    <span className="w-8 h-8 text-emerald-600 dark:text-emerald-400 text-2xl">💵</span>
                   </div>
                   <div>
                     <h3 className="text-2xl font-bold card-title">
@@ -247,11 +252,11 @@ export default function Home() {
               </div>
 
               {/* ROI Calculator Card */}
-              <div className="glass-card group hover:scale-105 transition-all duration-300 cursor-pointer p-8"
+              <div className="glass-card group hover:scale-105 transition-all duration-300 cursor-pointer p-8 border border-gray-200/50 dark:border-gray-700/50 hover:border-purple-400/50 dark:hover:border-purple-500/50"
                    onClick={() => handleViewChange('roi')}>
                 <div className="flex items-center mb-6">
-                  <div className="p-4 rounded-xl bg-purple-100 dark:bg-purple-900/30 mr-4">
-                    <span className="w-8 h-8 text-purple-600 dark:text-purple-400">📈</span>
+                  <div className="p-4 rounded-xl bg-gradient-to-br from-purple-100 to-purple-200 dark:from-purple-900/30 dark:to-purple-800/30 mr-4 shadow-lg">
+                    <span className="w-8 h-8 text-purple-600 dark:text-purple-400 text-2xl">📈</span>
                   </div>
                   <div>
                     <h3 className="text-2xl font-bold card-title">
