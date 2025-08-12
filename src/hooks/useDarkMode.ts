@@ -8,7 +8,7 @@ export const useDarkMode = () => {
   const [isHydrated, setIsHydrated] = useState<boolean>(false);
 
   useEffect(() => {
-    // Solo después de hidratar, leer del localStorage
+    // Leer la preferencia guardada o iniciar en modo claro por defecto
     if (typeof window !== 'undefined') {
       const savedMode = localStorage.getItem('darkMode');
       if (savedMode !== null) {
@@ -20,6 +20,11 @@ export const useDarkMode = () => {
         } else {
           document.documentElement.classList.remove('dark');
         }
+      } else {
+        // Si no hay preferencia guardada, iniciar en modo claro
+        setIsDarkMode(false);
+        document.documentElement.classList.remove('dark');
+        localStorage.setItem('darkMode', JSON.stringify(false));
       }
       setIsHydrated(true);
     }

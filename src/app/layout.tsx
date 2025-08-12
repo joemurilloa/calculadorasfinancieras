@@ -41,8 +41,14 @@ export default function RootLayout({
                   const savedMode = localStorage.getItem('darkMode');
                   if (savedMode === 'true') {
                     document.documentElement.classList.add('dark');
+                  } else {
+                    // Si no hay preferencia o es false, asegurar modo claro
+                    document.documentElement.classList.remove('dark');
                   }
-                } catch (e) {}
+                } catch (e) {
+                  // En caso de error, default a modo claro
+                  document.documentElement.classList.remove('dark');
+                }
               })();
             `,
           }}

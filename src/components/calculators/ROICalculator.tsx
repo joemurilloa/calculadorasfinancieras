@@ -13,9 +13,9 @@ const Money: React.FC<{ value: number }> = ({ value }) => (
   </span>
 );
 
-const Percentage: React.FC<{ value: number }> = ({ value }) => (
+const Percentage: React.FC<{ value: number | null | undefined }> = ({ value }) => (
   <span className="font-semibold">
-    {value.toFixed(2)}%
+    {typeof value === 'number' && !isNaN(value) ? value.toFixed(2) : '0.00'}%
   </span>
 );
 

@@ -222,12 +222,12 @@ export const ROIChart: React.FC<ROIChartProps> = ({ data }) => {
                   <div 
                     className="absolute top-0 transform -translate-x-1/2"
                     style={{ 
-                      left: `${Math.min((data.metrics.payback_period_months / data.timeline.length) * 100, 100)}%` 
+                      left: `${data.metrics.payback_period_months ? Math.min((data.metrics.payback_period_months / data.timeline.length) * 100, 100) : 0}%` 
                     }}
                   >
                     <div className="w-4 h-4 bg-green-500 rounded-full border-2 border-white shadow-lg"></div>
                     <div className="absolute top-6 left-1/2 transform -translate-x-1/2 text-xs font-semibold text-green-600 whitespace-nowrap">
-                      {data.metrics.payback_period_months.toFixed(1)} meses
+                      {data.metrics.payback_period_months ? data.metrics.payback_period_months.toFixed(1) : '0.0'} meses
                     </div>
                   </div>
                 </div>

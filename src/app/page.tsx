@@ -30,7 +30,7 @@ export default function Home() {
         <div className="fixed top-6 left-6 z-50">
           <button
             onClick={() => handleViewChange('home')}
-            className="apple-button-secondary px-6 py-3 shadow-lg hover:shadow-xl transition-all duration-300 backdrop-blur-md bg-white/80 dark:bg-slate-800/80 border border-gray-200 dark:border-gray-700 rounded-lg"
+            className="px-6 py-3 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 border border-blue-400 hover:border-blue-500"
           >
             ← Volver al inicio
           </button>
@@ -47,7 +47,7 @@ export default function Home() {
         <div className="fixed top-6 left-6 z-50">
           <button
             onClick={() => handleViewChange('home')}
-            className="apple-button-secondary px-6 py-3 shadow-lg hover:shadow-xl transition-all duration-300 backdrop-blur-md bg-white/80 dark:bg-slate-800/80 border border-gray-200 dark:border-gray-700 rounded-lg"
+            className="px-6 py-3 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 border border-green-400 hover:border-green-500"
           >
             ← Volver al inicio
           </button>
@@ -64,7 +64,7 @@ export default function Home() {
         <div className="fixed top-6 left-6 z-50">
           <button
             onClick={() => handleViewChange('home')}
-            className="apple-button-secondary px-6 py-3 shadow-lg hover:shadow-xl transition-all duration-300 backdrop-blur-md bg-white/80 dark:bg-slate-800/80 border border-gray-200 dark:border-gray-700 rounded-lg"
+            className="px-6 py-3 bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 border border-emerald-400 hover:border-emerald-500"
           >
             ← Volver al inicio
           </button>
@@ -81,7 +81,7 @@ export default function Home() {
         <div className="fixed top-6 left-6 z-50">
           <button
             onClick={() => handleViewChange('home')}
-            className="apple-button-secondary px-6 py-3 shadow-lg hover:shadow-xl transition-all duration-300 backdrop-blur-md bg-white/80 dark:bg-slate-800/80 border border-gray-200 dark:border-gray-700 rounded-lg"
+            className="px-6 py-3 bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 border border-purple-400 hover:border-purple-500"
           >
             ← Volver al inicio
           </button>
@@ -111,13 +111,13 @@ export default function Home() {
             {/* Dark Mode Toggle */}
             <div className="flex justify-center mb-12 animate-slide-in" style={{ animationDelay: '0.4s' }}>
               <ClientOnly fallback={
-                <button className="apple-button-secondary px-8 py-4 text-lg font-semibold bg-gray-100 dark:bg-gray-800 rounded-full shadow-lg" disabled>
+                <button className="px-8 py-4 text-lg font-semibold bg-white text-gray-800 border-2 border-gray-300 rounded-full shadow-lg" disabled>
                   🔄 Cargando...
                 </button>
               }>
                 <button
                   onClick={toggleDarkMode}
-                  className="apple-button-secondary px-8 py-4 text-lg font-semibold bg-gradient-to-r from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-900 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+                  className="px-8 py-4 text-lg font-semibold bg-white text-gray-800 dark:bg-gray-800 dark:text-white border-2 border-gray-300 dark:border-gray-600 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 hover:bg-gray-50 dark:hover:bg-gray-700"
                 >
                   {isDarkMode ? '☀️ Modo Claro' : '🌙 Modo Oscuro'}
                 </button>

@@ -163,7 +163,7 @@ export const CashflowCalculator: React.FC = () => {
               <Button 
                 onClick={calculate} 
                 isLoading={isLoading}
-                className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 text-lg"
+                className="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white px-8 py-3 text-lg font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 border-2 border-blue-400 hover:border-blue-500"
                 disabled={isLoading}
               >
                 {isLoading ? 'Calculando...' : 'Calcular Flujo de Caja'}
