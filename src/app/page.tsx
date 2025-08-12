@@ -26,14 +26,21 @@ export default function Home() {
   if (currentView === 'pricing') {
     return (
       <main className="min-h-screen">
-        <PricingCalculator />
-        <div className="fixed top-6 left-6 z-50">
-          <button
-            onClick={() => handleViewChange('home')}
-            className="px-6 py-3 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 border border-blue-400 hover:border-blue-500"
-          >
-            ← Volver al inicio
-          </button>
+        {/* Header con botón de volver */}
+        <header className="fixed top-0 left-0 right-0 z-50 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-700">
+          <div className="container mx-auto px-6 py-4">
+            <div className="flex justify-center items-center">
+              <button
+                onClick={() => handleViewChange('home')}
+                className="px-4 py-2 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 border border-blue-400 hover:border-blue-500"
+              >
+                ← Volver al inicio
+              </button>
+            </div>
+          </div>
+        </header>
+        <div className="pt-20">
+          <PricingCalculator />
         </div>
         <QuickNavigation currentView={currentView} onViewChange={handleViewChange} />
       </main>
@@ -43,14 +50,21 @@ export default function Home() {
   if (currentView === 'breakeven') {
     return (
       <main className="min-h-screen">
-        <BreakevenCalculator />
-        <div className="fixed top-6 left-6 z-50">
-          <button
-            onClick={() => handleViewChange('home')}
-            className="px-6 py-3 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 border border-green-400 hover:border-green-500"
-          >
-            ← Volver al inicio
-          </button>
+        {/* Header con botón de volver */}
+        <header className="fixed top-0 left-0 right-0 z-50 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-700">
+          <div className="container mx-auto px-6 py-4">
+            <div className="flex justify-center items-center">
+              <button
+                onClick={() => handleViewChange('home')}
+                className="px-4 py-2 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 border border-green-400 hover:border-green-500"
+              >
+                ← Volver al inicio
+              </button>
+            </div>
+          </div>
+        </header>
+        <div className="pt-20">
+          <BreakevenCalculator />
         </div>
         <QuickNavigation currentView={currentView} onViewChange={handleViewChange} />
       </main>
@@ -60,14 +74,21 @@ export default function Home() {
   if (currentView === 'cashflow') {
     return (
       <main className="min-h-screen">
-        <CashflowCalculator />
-        <div className="fixed top-6 left-6 z-50">
-          <button
-            onClick={() => handleViewChange('home')}
-            className="px-6 py-3 bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 border border-emerald-400 hover:border-emerald-500"
-          >
-            ← Volver al inicio
-          </button>
+        {/* Header con botón de volver */}
+        <header className="fixed top-0 left-0 right-0 z-50 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-700">
+          <div className="container mx-auto px-6 py-4">
+            <div className="flex justify-center items-center">
+              <button
+                onClick={() => handleViewChange('home')}
+                className="px-4 py-2 bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 border border-emerald-400 hover:border-emerald-500"
+              >
+                ← Volver al inicio
+              </button>
+            </div>
+          </div>
+        </header>
+        <div className="pt-20">
+          <CashflowCalculator />
         </div>
         <QuickNavigation currentView={currentView} onViewChange={handleViewChange} />
       </main>
@@ -77,14 +98,21 @@ export default function Home() {
   if (currentView === 'roi') {
     return (
       <main className="min-h-screen">
-        <ROICalculator />
-        <div className="fixed top-6 left-6 z-50">
-          <button
-            onClick={() => handleViewChange('home')}
-            className="px-6 py-3 bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 border border-purple-400 hover:border-purple-500"
-          >
-            ← Volver al inicio
-          </button>
+        {/* Header con botón de volver */}
+        <header className="fixed top-0 left-0 right-0 z-50 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-700">
+          <div className="container mx-auto px-6 py-4">
+            <div className="flex justify-center items-center">
+              <button
+                onClick={() => handleViewChange('home')}
+                className="px-4 py-2 bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 border border-purple-400 hover:border-purple-500"
+              >
+                ← Volver al inicio
+              </button>
+            </div>
+          </div>
+        </header>
+        <div className="pt-20">
+          <ROICalculator />
         </div>
         <QuickNavigation currentView={currentView} onViewChange={handleViewChange} />
       </main>
@@ -93,6 +121,28 @@ export default function Home() {
 
   return (
     <main className="min-h-screen overflow-hidden">
+      {/* Header con solo Dark Mode Toggle */}
+      <header className="fixed top-0 left-0 right-0 z-40">
+        <div className="container mx-auto px-6 py-4">
+          <div className="flex justify-end items-center">
+            {/* Dark Mode Toggle en esquina superior derecha */}
+            <ClientOnly fallback={
+              <button className="p-2 text-gray-600 dark:text-gray-400" disabled>
+                🔄
+              </button>
+            }>
+              <button
+                onClick={toggleDarkMode}
+                className="p-3 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-200 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border border-gray-200 dark:border-gray-700 shadow-lg"
+                title={isDarkMode ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro'}
+              >
+                {isDarkMode ? '☀️' : '🌙'}
+              </button>
+            </ClientOnly>
+          </div>
+        </div>
+      </header>
+
       {/* Hero Section */}
       <section className="hero-section">
         <div className="container mx-auto px-6 h-full flex flex-col justify-center">
@@ -107,22 +157,6 @@ export default function Home() {
               Herramientas inteligentes para emprendedores que buscan 
               tomar decisiones financieras precisas y estratégicas
             </p>
-
-            {/* Dark Mode Toggle */}
-            <div className="flex justify-center mb-12 animate-slide-in" style={{ animationDelay: '0.4s' }}>
-              <ClientOnly fallback={
-                <button className="px-8 py-4 text-lg font-semibold bg-white text-gray-800 border-2 border-gray-300 rounded-full shadow-lg" disabled>
-                  🔄 Cargando...
-                </button>
-              }>
-                <button
-                  onClick={toggleDarkMode}
-                  className="px-8 py-4 text-lg font-semibold bg-white text-gray-800 dark:bg-gray-800 dark:text-white border-2 border-gray-300 dark:border-gray-600 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 hover:bg-gray-50 dark:hover:bg-gray-700"
-                >
-                  {isDarkMode ? '☀️ Modo Claro' : '🌙 Modo Oscuro'}
-                </button>
-              </ClientOnly>
-            </div>
           </div>
         </div>
       </section>

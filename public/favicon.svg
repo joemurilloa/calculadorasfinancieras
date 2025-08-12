@@ -1,0 +1,26 @@
+<svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+  <!-- Fondo circular azul -->
+  <circle cx="16" cy="16" r="16" fill="#1e40af"/>
+  
+  <!-- Calculadora blanca centrada -->
+  <rect x="8" y="7" width="16" height="18" rx="2" fill="white"/>
+  
+  <!-- Pantalla de la calculadora -->
+  <rect x="10" y="9" width="12" height="4" rx="1" fill="#1e40af"/>
+  
+  <!-- Botones de la calculadora en grid 3x3 -->
+  <circle cx="11" cy="16" r="1.2" fill="#1e40af"/>
+  <circle cx="16" cy="16" r="1.2" fill="#1e40af"/>
+  <circle cx="21" cy="16" r="1.2" fill="#1e40af"/>
+  
+  <circle cx="11" cy="19" r="1.2" fill="#1e40af"/>
+  <circle cx="16" cy="19" r="1.2" fill="#1e40af"/>
+  <circle cx="21" cy="19" r="1.2" fill="#1e40af"/>
+  
+  <circle cx="11" cy="22" r="1.2" fill="#1e40af"/>
+  <circle cx="16" cy="22" r="1.2" fill="#1e40af"/>
+  <circle cx="21" cy="22" r="1.2" fill="#1e40af"/>
+  
+  <!-- Símbolo $ en la pantalla -->
+  <text x="16" y="12" text-anchor="middle" fill="white" font-size="3" font-weight="bold">$</text>
+</svg>

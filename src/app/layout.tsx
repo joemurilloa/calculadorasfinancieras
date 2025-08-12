@@ -16,12 +16,31 @@ export const metadata: Metadata = {
   title: "Calculadoras Financieras para Freelancers",
   description:
     "Calculadoras de precio, punto de equilibrio y análisis competitivo con precisión y consejos inteligentes.",
+  icons: {
+    icon: [
+      { url: '/favicon.svg', type: 'image/svg+xml' },
+      { url: '/favicon.ico' },
+      { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+      { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
+    ],
+    apple: [
+      { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
+    ],
+  },
   openGraph: {
     title: "Calculadoras Financieras",
     description:
       "Decisiones de precio basadas en datos. Calculadoras de Precio Ideal y Punto de Equilibrio.",
     type: "website",
     url: "/",
+    images: [
+      {
+        url: '/logo.png',
+        width: 1200,
+        height: 630,
+        alt: 'Calculadoras Financieras',
+      },
+    ],
   },
 };
 
