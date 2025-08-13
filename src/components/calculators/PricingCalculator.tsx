@@ -307,8 +307,8 @@ export const PricingCalculator: React.FC = () => {
                         <span className="font-medium text-slate-700">Materiales</span>
                       </div>
                       <div className="text-right">
-                        <div className="font-bold text-slate-900">{formatCurrency(result.costBreakdown.materials)}</div>
-                        <div className="text-sm text-slate-500">
+                        <div className="font-bold text-slate-900 dark:text-slate-100">{formatCurrency(result.costBreakdown.materials)}</div>
+                        <div className="text-sm text-slate-500 dark:text-slate-400">
                           {formatPercentage((result.costBreakdown.materials / result.costBreakdown.totalCost) * 100)}
                         </div>
                       </div>
@@ -321,8 +321,8 @@ export const PricingCalculator: React.FC = () => {
                         <span className="font-medium text-slate-700">Mano de obra</span>
                       </div>
                       <div className="text-right">
-                        <div className="font-bold text-slate-900">{formatCurrency(result.costBreakdown.labor)}</div>
-                        <div className="text-sm text-slate-500">
+                        <div className="font-bold text-slate-900 dark:text-slate-100">{formatCurrency(result.costBreakdown.labor)}</div>
+                        <div className="text-sm text-slate-500 dark:text-slate-400">
                           {formatPercentage((result.costBreakdown.labor / result.costBreakdown.totalCost) * 100)}
                         </div>
                       </div>
@@ -335,8 +335,8 @@ export const PricingCalculator: React.FC = () => {
                         <span className="font-medium text-slate-700">Gastos generales</span>
                       </div>
                       <div className="text-right">
-                        <div className="font-bold text-slate-900">{formatCurrency(result.costBreakdown.overhead)}</div>
-                        <div className="text-sm text-slate-500">
+                        <div className="font-bold text-slate-900 dark:text-slate-100">{formatCurrency(result.costBreakdown.overhead)}</div>
+                        <div className="text-sm text-slate-500 dark:text-slate-400">
                           {formatPercentage((result.costBreakdown.overhead / result.costBreakdown.totalCost) * 100)}
                         </div>
                       </div>
@@ -349,7 +349,7 @@ export const PricingCalculator: React.FC = () => {
                         <span className="font-bold text-slate-800">Total Costos</span>
                       </div>
                       <div className="text-right">
-                        <div className="font-bold text-slate-900 text-lg">{formatCurrency(result.costBreakdown.totalCost)}</div>
+                        <div className="font-bold text-slate-900 dark:text-slate-100 text-lg">{formatCurrency(result.costBreakdown.totalCost)}</div>
                       </div>
                     </div>
                   </div>
@@ -424,7 +424,7 @@ export const PricingCalculator: React.FC = () => {
                 {result.pricingStrategies.map((strategy, index) => (
                   <div key={index} className="strategy-card">
                     <div className="mb-6">
-                      <h4 className="text-xl font-bold text-slate-900 mb-3">{strategy.name}</h4>
+                      <h4 className="text-xl font-bold text-slate-900 dark:text-slate-100 mb-3">{strategy.name}</h4>
                       <div className="text-3xl font-bold text-blue-600 mb-3">
                         {formatCurrency(strategy.price)}
                       </div>

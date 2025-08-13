@@ -1,10 +1,10 @@
 'use client';
 
-import { DollarSign, TrendingUp, ArrowLeftRight, BarChart3 } from 'lucide-react';
+import { DollarSign, TrendingUp, ArrowLeftRight, BarChart3, Landmark, Wallet } from 'lucide-react';
 
 interface QuickNavigationProps {
   currentView: string;
-  onViewChange: (view: 'pricing' | 'breakeven' | 'cashflow' | 'roi' | 'home') => void;
+  onViewChange: (view: 'pricing' | 'breakeven' | 'cashflow' | 'roi' | 'loan' | 'budget' | 'home') => void;
 }
 
 export function QuickNavigation({ currentView, onViewChange }: QuickNavigationProps) {
@@ -12,7 +12,9 @@ export function QuickNavigation({ currentView, onViewChange }: QuickNavigationPr
     { id: 'pricing', name: 'Precio', icon: DollarSign, color: 'blue' },
     { id: 'breakeven', name: 'Equilibrio', icon: TrendingUp, color: 'green' },
     { id: 'cashflow', name: 'Flujo', icon: ArrowLeftRight, color: 'emerald' },
-    { id: 'roi', name: 'ROI', icon: BarChart3, color: 'purple' }
+    { id: 'roi', name: 'ROI', icon: BarChart3, color: 'purple' },
+    { id: 'loan', name: 'Préstamos', icon: Landmark, color: 'indigo' },
+    { id: 'budget', name: 'Presupuesto', icon: Wallet, color: 'emerald' }
   ];
 
   if (currentView === 'home') return null;
@@ -28,7 +30,7 @@ export function QuickNavigation({ currentView, onViewChange }: QuickNavigationPr
             return (
               <button
                 key={calc.id}
-                onClick={() => onViewChange(calc.id as 'pricing' | 'breakeven' | 'cashflow' | 'roi' | 'home')}
+                onClick={() => onViewChange(calc.id as 'pricing' | 'breakeven' | 'cashflow' | 'roi' | 'loan' | 'budget' | 'home')}
                 className={`
                   p-3 rounded-xl transition-all duration-200 group relative
                   ${isActive 
@@ -41,7 +43,7 @@ export function QuickNavigation({ currentView, onViewChange }: QuickNavigationPr
                 <Icon className="w-5 h-5" />
                 
                 {/* Tooltip */}
-                <div className="absolute -top-10 left-1/2 transform -translate-x-1/2 bg-black dark:bg-white text-white dark:text-black px-2 py-1 rounded text-xs opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap">
+                <div className="absolute -top-10 left-1/2 transform -translate-x-1/2 bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 px-2 py-1 rounded text-xs opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap border border-gray-700 dark:border-gray-300">
                   {calc.name}
                 </div>
               </button>

@@ -67,6 +67,8 @@ body {
   20%, 40%, 60%, 80% { transform: translateX(2px); }
 }
 
+/* Disabled slide-in animation for calculators */
+/*
 @keyframes slide-in {
   from { 
     opacity: 0; 
@@ -77,6 +79,7 @@ body {
     transform: translateY(0); 
   }
 }
+*/
 
 @keyframes scale-in {
   from { 
@@ -106,9 +109,12 @@ body {
   animation: shake 0.5s ease-in-out;
 }
 
+/* Disabled slide-in animation class */
+/*
 .animate-slide-in {
   animation: slide-in 0.3s ease-out;
 }
+*/
 
 .animate-scale-in {
   animation: scale-in 0.2s ease-out;
@@ -1106,6 +1112,296 @@ label {
 
   .dark ::-webkit-scrollbar-thumb:hover {
     background: rgba(71, 85, 105, 0.9);
+  }
+
+  /* Dropdown y Select options - CRÍTICO para contraste */
+  .dark select {
+    background: rgba(15, 23, 42, 0.95) !important;
+    border: 1px solid rgba(71, 85, 105, 0.6) !important;
+    color: #f8fafc !important;
+  }
+
+  .dark select option {
+    background: rgba(15, 23, 42, 0.98) !important;
+    color: #f8fafc !important;
+    padding: 8px 12px !important;
+  }
+
+  .dark select option:hover,
+  .dark select option:focus,
+  .dark select option:checked {
+    background: rgba(30, 41, 59, 0.9) !important;
+    color: #ffffff !important;
+  }
+
+  /* Para elementos select específicos */
+  .dark select[class*="bg-white"] {
+    background: rgba(15, 23, 42, 0.95) !important;
+  }
+
+  .dark select[class*="text-gray-900"] {
+    color: #f8fafc !important;
+  }
+
+  /* Mejorar contraste en todos los inputs */
+  .dark input {
+    background: rgba(15, 23, 42, 0.9) !important;
+    border: 1px solid rgba(71, 85, 105, 0.6) !important;
+    color: #f8fafc !important;
+  }
+
+  .dark input::placeholder {
+    color: #94a3b8 !important;
+  }
+
+  .dark input:focus {
+    border-color: #3b82f6 !important;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2) !important;
+  }
+
+  /* Textos en modo claro - asegurar legibilidad */
+  .text-gray-900 {
+    color: #0f172a !important;
+  }
+
+  .text-gray-800 {
+    color: #1e293b !important;
+  }
+
+  .text-gray-700 {
+    color: #334155 !important;
+  }
+
+  .text-gray-600 {
+    color: #475569 !important;
+  }
+
+  /* Fondos en modo claro */
+  .bg-white {
+    background-color: #ffffff !important;
+  }
+
+  .bg-gray-50 {
+    background-color: #f8fafc !important;
+  }
+
+  .bg-gray-100 {
+    background-color: #f1f5f9 !important;
+  }
+
+  /* Mejorar contraste en dropdowns y selects - modo claro */
+  select {
+    background-color: #ffffff !important;
+    color: #0f172a !important;
+    border: 1px solid #d1d5db !important;
+  }
+
+  select option {
+    background-color: #ffffff !important;
+    color: #0f172a !important;
+    padding: 8px 12px !important;
+  }
+
+  select option:hover,
+  select option:focus,
+  select option:checked {
+    background-color: #f3f4f6 !important;
+    color: #000000 !important;
+  }
+
+  /* Asegurar contraste en elementos text-slate-900 en modo claro */
+  .text-slate-900 {
+    color: #0f172a !important;
+  }
+
+  .text-slate-800 {
+    color: #1e293b !important;
+  }
+
+  .text-slate-700 {
+    color: #334155 !important;
+  }
+
+  /* En modo oscuro, forzar colores claros para text-slate-* */
+  .dark .text-slate-900 {
+    color: #f8fafc !important;
+  }
+
+  .dark .text-slate-800 {
+    color: #f1f5f9 !important;
+  }
+
+  .dark .text-slate-700 {
+    color: #e2e8f0 !important;
+  }
+
+  .dark .text-slate-600 {
+    color: #cbd5e1 !important;
+  }
+
+  .dark .text-slate-500 {
+    color: #94a3b8 !important;
+  }
+
+  /* Mejorar contraste en cards y contenedores */
+  .dark .bg-slate-50,
+  .dark .bg-gray-50 {
+    background-color: rgba(15, 23, 42, 0.8) !important;
+  }
+
+  .dark .bg-slate-100,
+  .dark .bg-gray-100 {
+    background-color: rgba(30, 41, 59, 0.8) !important;
+  }
+
+  .dark .bg-slate-200,
+  .dark .bg-gray-200 {
+    background-color: rgba(51, 65, 85, 0.8) !important;
+  }
+
+  /* Tooltips y elementos emergentes */
+  .dark .tooltip,
+  .dark [role="tooltip"] {
+    background: rgba(15, 23, 42, 0.95) !important;
+    color: #f8fafc !important;
+    border: 1px solid rgba(71, 85, 105, 0.5) !important;
+  }
+
+  /* Dropdowns específicos */
+  .dark .dropdown-menu,
+  .dark .select-menu {
+    background: rgba(15, 23, 42, 0.95) !important;
+    border: 1px solid rgba(71, 85, 105, 0.6) !important;
+  }
+
+  .dark .dropdown-item,
+  .dark .select-item {
+    color: #f8fafc !important;
+  }
+
+  .dark .dropdown-item:hover,
+  .dark .select-item:hover {
+    background: rgba(30, 41, 59, 0.9) !important;
+    color: #ffffff !important;
+  }
+
+  /* Mejorar text-slate-* en modo claro para máximo contraste */
+  .text-slate-700 {
+    color: #334155 !important;
+  }
+
+  .text-slate-600 {
+    color: #475569 !important;
+  }
+
+  .text-slate-500 {
+    color: #64748b !important;
+  }
+
+  .text-slate-800 {
+    color: #1e293b !important;
+  }
+
+  /* Asegurar contraste en fondos claros */
+  .bg-slate-100 {
+    background-color: #f1f5f9 !important;
+  }
+
+  .bg-slate-200 {
+    background-color: #e2e8f0 !important;
+  }
+
+  /* Mejorar elementos que combinan fondos y textos */
+  .text-slate-700 {
+    color: #334155 !important;
+  }
+
+  .dark .text-slate-700 {
+    color: #cbd5e1 !important;
+  }
+
+  .text-slate-600 {
+    color: #475569 !important;
+  }
+
+  .dark .text-slate-600 {
+    color: #94a3b8 !important;
+  }
+
+  /* Botones y elementos interactivos */
+  button .text-slate-900,
+  .button .text-slate-900 {
+    color: #0f172a !important;
+  }
+
+  .dark button .text-slate-900,
+  .dark .button .text-slate-900 {
+    color: #f8fafc !important;
+  }
+
+  /* Mejorar contraste específico en labels */
+  label {
+    color: #374151 !important;
+    font-weight: 500 !important;
+  }
+
+  .dark label {
+    color: #e5e7eb !important;
+    font-weight: 500 !important;
+  }
+
+  /* Cards y contenedores de resultados */
+  .metric-card .text-slate-900,
+  .result-card .text-slate-900,
+  .dashboard-card .text-slate-900 {
+    color: #0f172a !important;
+  }
+
+  .dark .metric-card .text-slate-900,
+  .dark .result-card .text-slate-900,
+  .dark .dashboard-card .text-slate-900 {
+    color: #f8fafc !important;
+  }
+
+  /* Textos secundarios */
+  .text-slate-500 {
+    color: #6b7280 !important;
+  }
+
+  .dark .text-slate-500 {
+    color: #9ca3af !important;
+  }
+
+  /* Placeholder específico para inputs */
+  input::placeholder,
+  select::placeholder,
+  textarea::placeholder {
+    color: #9ca3af !important;
+  }
+
+  .dark input::placeholder,
+  .dark select::placeholder,
+  .dark textarea::placeholder {
+    color: #6b7280 !important;
+  }
+
+  /* Elementos específicos para evitar conflictos */
+  .bg-blue-500,
+  .bg-green-500,
+  .bg-red-500,
+  .bg-purple-500,
+  .bg-indigo-500,
+  .bg-emerald-500 {
+    /* Mantener colores originales para botones y elementos de marca */
+  }
+
+  /* Asegurar legibilidad en todas las superficies */
+  .dark .surface-text {
+    color: #f1f5f9 !important;
+  }
+
+  .surface-text {
+    color: #1e293b !important;
   }
 
   /* Asegurar que las calculadoras específicas mantengan el tema */

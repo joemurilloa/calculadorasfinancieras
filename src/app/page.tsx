@@ -6,11 +6,13 @@ import { PricingCalculator } from '@/components/calculators/PricingCalculator';
 import { BreakevenCalculator } from '@/components/calculators/BreakevenCalculator';
 import { CashflowCalculator } from '@/components/calculators/CashflowCalculator';
 import { ROICalculator } from '@/components/calculators/ROICalculator';
+import { BudgetCalculator } from '@/components/calculators/BudgetCalculator';
+import { LoanComparatorCalculator } from '@/components/calculators/LoanComparatorCalculator';
 import { QuickNavigation } from '@/components/ui/QuickNavigation';
 import { useDarkMode } from '@/hooks/useDarkMode';
 import { ClientOnly } from '@/components/ui/ClientOnly';
 
-type CalculatorType = 'home' | 'pricing' | 'breakeven' | 'cashflow' | 'roi';
+type CalculatorType = 'home' | 'pricing' | 'breakeven' | 'cashflow' | 'roi' | 'loan' | 'budget';
 
 export default function Home() {
   const [currentView, setCurrentView] = useState<CalculatorType>('home');
@@ -19,7 +21,7 @@ export default function Home() {
   const handleViewChange = (view: CalculatorType) => {
     setCurrentView(view);
     if (typeof window !== 'undefined') {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      window.scrollTo({ top: 0, behavior: 'auto' });
     }
   };
 
@@ -113,6 +115,51 @@ export default function Home() {
         </header>
         <div className="pt-20">
           <ROICalculator />
+        </div>
+        <QuickNavigation currentView={currentView} onViewChange={handleViewChange} />
+      </main>
+    );
+  }
+  if (currentView === 'loan') {
+    return (
+      <main className="min-h-screen">
+        <header className="fixed top-0 left-0 right-0 z-50 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-700">
+          <div className="container mx-auto px-6 py-4">
+            <div className="flex justify-center items-center">
+              <button
+                onClick={() => handleViewChange('home')}
+                className="px-4 py-2 bg-gradient-to-r from-indigo-500 to-indigo-600 hover:from-indigo-600 hover:to-indigo-700 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 border border-indigo-400 hover:border-indigo-500"
+              >
+                ← Volver al inicio
+              </button>
+            </div>
+          </div>
+        </header>
+        <div className="pt-20">
+          <LoanComparatorCalculator />
+        </div>
+        <QuickNavigation currentView={currentView} onViewChange={handleViewChange} />
+      </main>
+    );
+  }
+
+  if (currentView === 'budget') {
+    return (
+      <main className="min-h-screen">
+        <header className="fixed top-0 left-0 right-0 z-50 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-700">
+          <div className="container mx-auto px-6 py-4">
+            <div className="flex justify-center items-center">
+              <button
+                onClick={() => handleViewChange('home')}
+                className="px-4 py-2 bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 border border-emerald-400 hover:border-emerald-500"
+              >
+                ← Volver al inicio
+              </button>
+            </div>
+          </div>
+        </header>
+        <div className="pt-20">
+          <BudgetCalculator />
         </div>
         <QuickNavigation currentView={currentView} onViewChange={handleViewChange} />
       </main>
@@ -322,6 +369,63 @@ export default function Home() {
                   <span className="px-3 py-1 bg-orange-100 dark:bg-orange-900/30 rounded-full text-sm font-medium badge-orange">
                     Escenarios múltiples
                   </span>
+                </div>
+              </div>
+              {/* Loan Comparator Card */}
+              <div className="glass-card group hover:scale-105 transition-all duration-300 cursor-pointer p-8 border border-gray-200/50 dark:border-gray-700/50 hover:border-indigo-400/50 dark:hover:border-indigo-500/50"
+                   onClick={() => handleViewChange('loan')}>
+                <div className="flex items-center mb-6">
+                  <div className="p-4 rounded-xl bg-gradient-to-br from-indigo-100 to-indigo-200 dark:from-indigo-900/30 dark:to-indigo-800/30 mr-4 shadow-lg">
+                    <span className="w-8 h-8 text-indigo-600 dark:text-indigo-400 text-2xl">🏦</span>
+                  </div>
+                  <div>
+                    <h3 className="text-2xl font-bold card-title">Comparador de Préstamos</h3>
+                    <p className="font-medium card-subtitle">Cuota, costo y APR</p>
+                  </div>
+                </div>
+
+                <p className="mb-6 leading-relaxed text-lg card-description">
+                  Compara ofertas de crédito, calcula cuota, costo total, tiempo de liquidación y revisa tu capacidad de endeudamiento.
+                </p>
+
+                <div className="flex items-center text-indigo-600 dark:text-indigo-400 font-semibold text-lg group-hover:translate-x-2 transition-transform">
+                  <span>Comenzar comparación</span>
+                  <ArrowRight className="w-5 h-5 ml-2" />
+                </div>
+
+                <div className="mt-6 flex flex-wrap gap-2">
+                  <span className="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 rounded-full text-sm font-medium badge-blue">Cuota mensual</span>
+                  <span className="px-3 py-1 bg-green-100 dark:bg-green-900/30 rounded-full text-sm font-medium badge-green">Costo total</span>
+                  <span className="px-3 py-1 bg-purple-100 dark:bg-purple-900/30 rounded-full text-sm font-medium badge-purple">APR aprox</span>
+                </div>
+              </div>
+              {/* Budget Calculator Card */}
+              <div className="glass-card group hover:scale-105 transition-all duration-300 cursor-pointer p-8 border border-gray-200/50 dark:border-gray-700/50 hover:border-emerald-400/50 dark:hover:border-emerald-500/50"
+                   onClick={() => handleViewChange('budget')}>
+                <div className="flex items-center mb-6">
+                  <div className="p-4 rounded-xl bg-gradient-to-br from-emerald-100 to-emerald-200 dark:from-emerald-900/30 dark:to-emerald-800/30 mr-4 shadow-lg">
+                    <span className="w-8 h-8 text-emerald-600 dark:text-emerald-400 text-2xl">💰</span>
+                  </div>
+                  <div>
+                    <h3 className="text-2xl font-bold card-title">Presupuesto Mensual</h3>
+                    <p className="font-medium card-subtitle">Ingresos vs. Gastos</p>
+                  </div>
+                </div>
+
+                <p className="mb-6 leading-relaxed text-lg card-description">
+                  Gestiona tu presupuesto personal organizando ingresos y gastos por categorías 
+                  con análisis automático y consejos financieros personalizados.
+                </p>
+
+                <div className="flex items-center text-emerald-600 dark:text-emerald-400 font-semibold text-lg group-hover:translate-x-2 transition-transform">
+                  <span>Comenzar presupuesto</span>
+                  <ArrowRight className="w-5 h-5 ml-2" />
+                </div>
+
+                <div className="mt-6 flex flex-wrap gap-2">
+                  <span className="px-3 py-1 bg-green-100 dark:bg-green-900/30 rounded-full text-sm font-medium badge-green">Categorías custom</span>
+                  <span className="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 rounded-full text-sm font-medium badge-blue">Análisis automático</span>
+                  <span className="px-3 py-1 bg-purple-100 dark:bg-purple-900/30 rounded-full text-sm font-medium badge-purple">Consejos inteligentes</span>
                 </div>
               </div>
             </div>
