@@ -1,10 +1,10 @@
 'use client';
 
-import { DollarSign, TrendingUp, ArrowLeftRight, BarChart3, Landmark, Wallet } from 'lucide-react';
+import { DollarSign, TrendingUp, ArrowLeftRight, BarChart3, Landmark, Wallet, Receipt, CreditCard } from 'lucide-react';
 
 interface QuickNavigationProps {
   currentView: string;
-  onViewChange: (view: 'pricing' | 'breakeven' | 'cashflow' | 'roi' | 'loan' | 'budget' | 'home') => void;
+  onViewChange: (view: 'pricing' | 'breakeven' | 'cashflow' | 'roi' | 'loan' | 'budget' | 'tax' | 'debt' | 'home') => void;
 }
 
 export function QuickNavigation({ currentView, onViewChange }: QuickNavigationProps) {
@@ -14,7 +14,9 @@ export function QuickNavigation({ currentView, onViewChange }: QuickNavigationPr
     { id: 'cashflow', name: 'Flujo', icon: ArrowLeftRight, color: 'emerald' },
     { id: 'roi', name: 'ROI', icon: BarChart3, color: 'purple' },
     { id: 'loan', name: 'Préstamos', icon: Landmark, color: 'indigo' },
-    { id: 'budget', name: 'Presupuesto', icon: Wallet, color: 'emerald' }
+    { id: 'budget', name: 'Presupuesto', icon: Wallet, color: 'emerald' },
+    { id: 'tax', name: 'Impuestos', icon: Receipt, color: 'red' },
+    { id: 'debt', name: 'Deudas', icon: CreditCard, color: 'green' }
   ];
 
   if (currentView === 'home') return null;
@@ -30,7 +32,7 @@ export function QuickNavigation({ currentView, onViewChange }: QuickNavigationPr
             return (
               <button
                 key={calc.id}
-                onClick={() => onViewChange(calc.id as 'pricing' | 'breakeven' | 'cashflow' | 'roi' | 'loan' | 'budget' | 'home')}
+                onClick={() => onViewChange(calc.id as 'pricing' | 'breakeven' | 'cashflow' | 'roi' | 'loan' | 'budget' | 'tax' | 'debt' | 'home')}
                 className={`
                   p-3 rounded-xl transition-all duration-200 group relative
                   ${isActive 

@@ -1,18 +1,23 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, lazy, Suspense } from 'react';
 import { TrendingUp, DollarSign, ArrowRight } from 'lucide-react';
-import { PricingCalculator } from '@/components/calculators/PricingCalculator';
-import { BreakevenCalculator } from '@/components/calculators/BreakevenCalculator';
-import { CashflowCalculator } from '@/components/calculators/CashflowCalculator';
-import { ROICalculator } from '@/components/calculators/ROICalculator';
-import { BudgetCalculator } from '@/components/calculators/BudgetCalculator';
-import { LoanComparatorCalculator } from '@/components/calculators/LoanComparatorCalculator';
 import { QuickNavigation } from '@/components/ui/QuickNavigation';
 import { useDarkMode } from '@/hooks/useDarkMode';
 import { ClientOnly } from '@/components/ui/ClientOnly';
+import { LoadingSkeleton } from '@/components/ui/loading-skeleton';
 
-type CalculatorType = 'home' | 'pricing' | 'breakeven' | 'cashflow' | 'roi' | 'loan' | 'budget';
+// Lazy loading para mejor rendimiento
+const PricingCalculator = lazy(() => import('@/components/calculators/PricingCalculator').then(m => ({ default: m.PricingCalculator })));
+const BreakevenCalculator = lazy(() => import('@/components/calculators/BreakevenCalculator').then(m => ({ default: m.BreakevenCalculator })));
+const CashflowCalculator = lazy(() => import('@/components/calculators/CashflowCalculator').then(m => ({ default: m.CashflowCalculator })));
+const ROICalculator = lazy(() => import('@/components/calculators/ROICalculator').then(m => ({ default: m.ROICalculator })));
+const BudgetCalculator = lazy(() => import('@/components/calculators/BudgetCalculator').then(m => ({ default: m.BudgetCalculator })));
+const LoanComparatorCalculator = lazy(() => import('@/components/calculators/LoanComparatorCalculator').then(m => ({ default: m.LoanComparatorCalculator })));
+const TaxCalculator = lazy(() => import('@/components/calculators/TaxCalculator').then(m => ({ default: m.TaxCalculator })));
+const DebtCalculator = lazy(() => import('@/components/calculators/DebtCalculator').then(m => ({ default: m.DebtCalculator })));
+
+type CalculatorType = 'home' | 'pricing' | 'breakeven' | 'cashflow' | 'roi' | 'loan' | 'budget' | 'tax' | 'debt';
 
 export default function Home() {
   const [currentView, setCurrentView] = useState<CalculatorType>('home');
@@ -42,7 +47,9 @@ export default function Home() {
           </div>
         </header>
         <div className="pt-20">
-          <PricingCalculator />
+          <Suspense fallback={<LoadingSkeleton />}>
+            <PricingCalculator />
+          </Suspense>
         </div>
         <QuickNavigation currentView={currentView} onViewChange={handleViewChange} />
       </main>
@@ -66,7 +73,9 @@ export default function Home() {
           </div>
         </header>
         <div className="pt-20">
-          <BreakevenCalculator />
+          <Suspense fallback={<LoadingSkeleton />}>
+            <BreakevenCalculator />
+          </Suspense>
         </div>
         <QuickNavigation currentView={currentView} onViewChange={handleViewChange} />
       </main>
@@ -90,7 +99,9 @@ export default function Home() {
           </div>
         </header>
         <div className="pt-20">
-          <CashflowCalculator />
+          <Suspense fallback={<LoadingSkeleton />}>
+            <CashflowCalculator />
+          </Suspense>
         </div>
         <QuickNavigation currentView={currentView} onViewChange={handleViewChange} />
       </main>
@@ -114,7 +125,9 @@ export default function Home() {
           </div>
         </header>
         <div className="pt-20">
-          <ROICalculator />
+          <Suspense fallback={<LoadingSkeleton />}>
+            <ROICalculator />
+          </Suspense>
         </div>
         <QuickNavigation currentView={currentView} onViewChange={handleViewChange} />
       </main>
@@ -136,7 +149,9 @@ export default function Home() {
           </div>
         </header>
         <div className="pt-20">
-          <LoanComparatorCalculator />
+          <Suspense fallback={<LoadingSkeleton />}>
+            <LoanComparatorCalculator />
+          </Suspense>
         </div>
         <QuickNavigation currentView={currentView} onViewChange={handleViewChange} />
       </main>
@@ -159,7 +174,59 @@ export default function Home() {
           </div>
         </header>
         <div className="pt-20">
-          <BudgetCalculator />
+          <Suspense fallback={<LoadingSkeleton />}>
+            <BudgetCalculator />
+          </Suspense>
+        </div>
+        <QuickNavigation currentView={currentView} onViewChange={handleViewChange} />
+      </main>
+    );
+  }
+
+  if (currentView === 'tax') {
+    return (
+      <main className="min-h-screen">
+        <header className="fixed top-0 left-0 right-0 z-50 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-700">
+          <div className="container mx-auto px-6 py-4">
+            <div className="flex justify-center items-center">
+              <button
+                onClick={() => handleViewChange('home')}
+                className="px-4 py-2 bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 border border-red-400 hover:border-red-500"
+              >
+                ← Volver al inicio
+              </button>
+            </div>
+          </div>
+        </header>
+        <div className="pt-20">
+          <Suspense fallback={<LoadingSkeleton />}>
+            <TaxCalculator />
+          </Suspense>
+        </div>
+        <QuickNavigation currentView={currentView} onViewChange={handleViewChange} />
+      </main>
+    );
+  }
+
+  if (currentView === 'debt') {
+    return (
+      <main className="min-h-screen">
+        <header className="fixed top-0 left-0 right-0 z-50 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-700">
+          <div className="container mx-auto px-6 py-4">
+            <div className="flex justify-center items-center">
+              <button
+                onClick={() => handleViewChange('home')}
+                className="px-4 py-2 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 border border-green-400 hover:border-green-500"
+              >
+                ← Volver al inicio
+              </button>
+            </div>
+          </div>
+        </header>
+        <div className="pt-20">
+          <Suspense fallback={<LoadingSkeleton />}>
+            <DebtCalculator />
+          </Suspense>
         </div>
         <QuickNavigation currentView={currentView} onViewChange={handleViewChange} />
       </main>
@@ -426,6 +493,66 @@ export default function Home() {
                   <span className="px-3 py-1 bg-green-100 dark:bg-green-900/30 rounded-full text-sm font-medium badge-green">Categorías custom</span>
                   <span className="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 rounded-full text-sm font-medium badge-blue">Análisis automático</span>
                   <span className="px-3 py-1 bg-purple-100 dark:bg-purple-900/30 rounded-full text-sm font-medium badge-purple">Consejos inteligentes</span>
+                </div>
+              </div>
+
+              {/* Tax Calculator Card */}
+              <div className="glass-card group hover:scale-105 transition-all duration-300 cursor-pointer p-8 border border-gray-200/50 dark:border-gray-700/50 hover:border-red-400/50 dark:hover:border-red-500/50"
+                   onClick={() => handleViewChange('tax')}>
+                <div className="flex items-center mb-6">
+                  <div className="p-4 rounded-xl bg-gradient-to-br from-red-100 to-red-200 dark:from-red-900/30 dark:to-red-800/30 mr-4 shadow-lg">
+                    <span className="w-8 h-8 text-red-600 dark:text-red-400 text-2xl">🧾</span>
+                  </div>
+                  <div>
+                    <h3 className="text-2xl font-bold card-title">Calculadora de Impuestos</h3>
+                    <p className="font-medium card-subtitle">IVA, ISR, Retenciones</p>
+                  </div>
+                </div>
+
+                <p className="mb-6 leading-relaxed text-lg card-description">
+                  Calcula impuestos precisos para personas físicas y morales con múltiples regímenes fiscales, 
+                  retenciones, deducciones y optimización fiscal inteligente.
+                </p>
+
+                <div className="flex items-center text-red-600 dark:text-red-400 font-semibold text-lg group-hover:translate-x-2 transition-transform">
+                  <span>Comenzar cálculo</span>
+                  <ArrowRight className="w-5 h-5 ml-2" />
+                </div>
+
+                <div className="mt-6 flex flex-wrap gap-2">
+                  <span className="px-3 py-1 bg-red-100 dark:bg-red-900/30 rounded-full text-sm font-medium badge-red">IVA & ISR</span>
+                  <span className="px-3 py-1 bg-orange-100 dark:bg-orange-900/30 rounded-full text-sm font-medium badge-orange">Deducciones</span>
+                  <span className="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 rounded-full text-sm font-medium badge-blue">Optimización</span>
+                </div>
+              </div>
+
+              {/* Debt Calculator Card */}
+              <div className="glass-card group hover:scale-105 transition-all duration-300 cursor-pointer p-8 border border-gray-200/50 dark:border-gray-700/50 hover:border-green-400/50 dark:hover:border-green-500/50"
+                   onClick={() => handleViewChange('debt')}>
+                <div className="flex items-center mb-6">
+                  <div className="p-4 rounded-xl bg-gradient-to-br from-green-100 to-green-200 dark:from-green-900/30 dark:to-green-800/30 mr-4 shadow-lg">
+                    <span className="w-8 h-8 text-green-600 dark:text-green-400 text-2xl">💳</span>
+                  </div>
+                  <div>
+                    <h3 className="text-2xl font-bold card-title">Liberación de Deudas</h3>
+                    <p className="font-medium card-subtitle">Plan Personalizado</p>
+                  </div>
+                </div>
+
+                <p className="mb-6 leading-relaxed text-lg card-description">
+                  Crea un plan paso a paso para salir de todas tus deudas. Analizamos tu situación y te damos 
+                  la estrategia perfecta con cronograma detallado y consejos personalizados.
+                </p>
+
+                <div className="flex items-center text-green-600 dark:text-green-400 font-semibold text-lg group-hover:translate-x-2 transition-transform">
+                  <span>Crear mi plan</span>
+                  <ArrowRight className="w-5 h-5 ml-2" />
+                </div>
+
+                <div className="mt-6 flex flex-wrap gap-2">
+                  <span className="px-3 py-1 bg-green-100 dark:bg-green-900/30 rounded-full text-sm font-medium badge-green">Avalancha</span>
+                  <span className="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 rounded-full text-sm font-medium badge-blue">Bola de Nieve</span>
+                  <span className="px-3 py-1 bg-purple-100 dark:bg-purple-900/30 rounded-full text-sm font-medium badge-purple">Personalizado</span>
                 </div>
               </div>
             </div>
