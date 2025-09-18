@@ -9,14 +9,6 @@ export interface DebtFormData {
   type: 'credit_card' | 'personal_loan' | 'mortgage' | 'car_loan' | 'student_loan' | 'other';
 }
 
-const initialDebt: DebtFormData = {
-  name: '',
-  balance: 0,
-  interestRate: 0,
-  minimumPayment: 0,
-  type: 'credit_card'
-};
-
 export const useDebtCalculator = () => {
   const [debts, setDebts] = useState<Debt[]>([]);
   const [monthlyIncome, setMonthlyIncome] = useState<number>(0);
@@ -117,9 +109,9 @@ export const useDebtCalculator = () => {
       let plan: DebtPaymentPlan;
       
       if (selectedStrategy === 'avalanche') {
-        plan = DebtCalculator.calculateAvalancheStrategy(debts, extraPayment, monthlyIncome);
+        plan = DebtCalculator.calculateAvalancheStrategy(debts, extraPayment);
       } else if (selectedStrategy === 'snowball') {
-        plan = DebtCalculator.calculateSnowballStrategy(debts, extraPayment, monthlyIncome);
+        plan = DebtCalculator.calculateSnowballStrategy(debts, extraPayment);
       } else {
         plan = DebtCalculator.calculateCustomStrategy(debts, extraPayment, monthlyIncome, customPriorities);
       }

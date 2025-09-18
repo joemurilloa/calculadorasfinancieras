@@ -24,27 +24,28 @@ export const PricingCalculator: React.FC = () => {
   const { isDarkMode, toggleDarkMode } = useDarkMode();
 
   return (
-    <div className="min-h-screen">
-      {/* Hero Section */}
-      <section className="hero-section">
-        <div className="container mx-auto px-6">
-          <div className="max-w-4xl mx-auto">
-            <h1 className="hero-title mb-6">
-              Precio
-              <br />
-              <span className="text-blue-600">Perfecto</span>
-            </h1>
-            
-            <p className="hero-subtitle mb-8">
-              Descubre el precio ideal para tu producto o servicio con análisis inteligente 
-              de costos, competencia y estrategias de mercado
-            </p>
+    <div className="calculator-container">
+      <div className="calculator-content">
+        {/* Hero Section */}
+        <section className="hero-section">
+          <div className="container mx-auto px-6">
+            <div className="max-w-4xl mx-auto">
+              <h1 className="hero-title mb-6">
+                Precio
+                <br />
+                <span className="text-blue-600">Perfecto</span>
+              </h1>
+              
+              <p className="hero-subtitle mb-8">
+                Descubre el precio ideal para tu producto o servicio con análisis inteligente 
+                de costos, competencia y estrategias de mercado
+              </p>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Main Content */}
-      <div className="container mx-auto px-6 pb-20 -mt-12">
+        {/* Main Content */}
+        <div className="container mx-auto px-6 pb-20 -mt-12">
         {/* Input Form */}
         <div className="max-w-4xl mx-auto mb-16">
           <div className="glass-card-strong">
@@ -515,19 +516,20 @@ export const PricingCalculator: React.FC = () => {
         )}
       </div>
       
-      {/* Floating Action Button */}
-      <FloatingActionButton
-        onNewCalculation={() => {
-          if (typeof window !== 'undefined') {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-          }
-        }}
-        onExportPDF={() => result && exportToPDF(result, formData.productName)}
-        onReset={resetCalculator}
-        hasResults={!!result}
-        onToggleDarkMode={toggleDarkMode}
-        isDarkMode={isDarkMode}
-      />
+        {/* Floating Action Button */}
+        <FloatingActionButton
+          onNewCalculation={() => {
+            if (typeof window !== 'undefined') {
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+          }}
+          onExportPDF={() => result && exportToPDF(result, formData.productName)}
+          onReset={resetCalculator}
+          hasResults={!!result}
+          onToggleDarkMode={toggleDarkMode}
+          isDarkMode={isDarkMode}
+        />
+      </div>
     </div>
   );
 };

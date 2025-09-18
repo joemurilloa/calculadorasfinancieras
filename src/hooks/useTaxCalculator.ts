@@ -107,7 +107,7 @@ export const useTaxCalculator = () => {
     return newErrors;
   }, []);
 
-  const handleInputChange = useCallback((field: keyof TaxFormData, value: any) => {
+  const handleInputChange = useCallback((field: keyof TaxFormData, value: string | number) => {
     setFormData(prev => ({
       ...prev,
       [field]: value
@@ -156,7 +156,7 @@ export const useTaxCalculator = () => {
     setErrors({});
   }, []);
 
-  const updateField = useCallback((field: keyof TaxFormData, value: any) => {
+  const updateField = useCallback((field: keyof TaxFormData, value: string | number) => {
     handleInputChange(field, value);
   }, [handleInputChange]);
 

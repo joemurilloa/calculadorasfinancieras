@@ -2,12 +2,8 @@
 
 import React, { useState } from 'react';
 import { 
-  CreditCard, 
   DollarSign, 
-  TrendingUp, 
-  AlertCircle, 
   CheckCircle, 
-  Info, 
   Plus, 
   Trash2, 
   Calculator,
@@ -30,34 +26,36 @@ export const DebtCalculator: React.FC = () => {
     monthlyIncome,
     extraPayment,
     selectedStrategy,
-    customPriorities,
     analysis,
     paymentPlan,
     isLoading,
     errors,
     addDebt,
-    updateDebt,
     removeDebt,
     calculatePaymentPlan,
-    updateCustomPriority,
     resetCalculator,
     setMonthlyIncome,
     setExtraPayment,
     setSelectedStrategy,
     getTotalDebt,
     getTotalMinimumPayments,
-    getDebtToIncomeRatio,
     canAffordExtraPayment
   } = useDebtCalculator();
   
   const { isDarkMode, toggleDarkMode } = useDarkMode();
   const [showAddDebt, setShowAddDebt] = useState(false);
-  const [newDebt, setNewDebt] = useState({
+  const [newDebt, setNewDebt] = useState<{
+    name: string;
+    balance: number;
+    interestRate: number;
+    minimumPayment: number;
+    type: keyof typeof DEBT_TYPES;
+  }>({
     name: '',
     balance: 0,
     interestRate: 0,
     minimumPayment: 0,
-    type: 'credit_card' as const
+    type: 'credit_card'
   });
 
   const handleAddDebt = () => {
@@ -73,14 +71,6 @@ export const DebtCalculator: React.FC = () => {
     }
   };
 
-  const getStrategyColor = (strategy: string) => {
-    switch (strategy) {
-      case 'avalanche': return 'text-red-600 dark:text-red-400';
-      case 'snowball': return 'text-blue-600 dark:text-blue-400';
-      case 'custom': return 'text-purple-600 dark:text-purple-400';
-      default: return 'text-gray-600 dark:text-gray-400';
-    }
-  };
 
   const getStrategyIcon = (strategy: string) => {
     switch (strategy) {
@@ -228,7 +218,7 @@ export const DebtCalculator: React.FC = () => {
                     </label>
                     <select
                       value={newDebt.type}
-                      onChange={(e) => setNewDebt(prev => ({ ...prev, type: e.target.value as any }))}
+                      onChange={(e) => setNewDebt(prev => ({ ...prev, type: e.target.value as keyof typeof DEBT_TYPES }))}
                       className="apple-input"
                     >
                       {Object.entries(DEBT_TYPES).map(([key, type]) => (
@@ -329,7 +319,7 @@ export const DebtCalculator: React.FC = () => {
               </div>
               
               <div className="space-y-4">
-                {debts.map((debt, index) => (
+                {debts.map((debt) => (
                   <div key={debt.id} className="bg-white/80 dark:bg-slate-800/80 rounded-xl p-6 border border-slate-200 dark:border-slate-700">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-4">
@@ -391,7 +381,7 @@ export const DebtCalculator: React.FC = () => {
                         ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20'
                         : 'border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600'
                     }`}
-                    onClick={() => setSelectedStrategy(key as any)}
+                    onClick={() => setSelectedStrategy(key as keyof typeof STRATEGY_DESCRIPTIONS)}
                   >
                     <div className="text-center">
                       <div className="text-3xl mb-3">

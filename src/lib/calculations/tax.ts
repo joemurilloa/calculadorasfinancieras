@@ -123,7 +123,7 @@ export class TaxCalculator {
     const netIncome = totalIncome - totalTaxes;
     
     // Generar recomendaciones de optimización
-    const optimization = this.generateOptimizationRecommendations(input, totalIncome, totalDeductions);
+    const optimization = this.generateOptimizationRecommendations(input, totalIncome);
     
     return {
       isr: isrResult,
@@ -170,7 +170,7 @@ export class TaxCalculator {
     return Math.min(totalDeductions, maxDeductions);
   }
 
-  private static calculateISR(taxableIncome: number, taxpayerType: 'individual' | 'business'): any {
+  private static calculateISR(taxableIncome: number, taxpayerType: 'individual' | 'business'): { taxableIncome: number; isrCalculated: number; isrWithholding: number; isrToPay: number; effectiveRate: number; bracket: { min: number; max: number; rate: number; fixed: number } } {
     const table = this.ISR_TABLES[taxpayerType];
     
     for (const bracket of table) {
@@ -183,7 +183,8 @@ export class TaxCalculator {
           isrCalculated: Math.round(isrCalculated * 100) / 100,
           isrWithholding: 0, // Se calculará por separado
           isrToPay: Math.round(isrCalculated * 100) / 100,
-          effectiveRate: Math.round(effectiveRate * 100) / 100
+          effectiveRate: Math.round(effectiveRate * 100) / 100,
+          bracket
         };
       }
     }
@@ -198,11 +199,12 @@ export class TaxCalculator {
       isrCalculated: Math.round(isrCalculated * 100) / 100,
       isrWithholding: 0,
       isrToPay: Math.round(isrCalculated * 100) / 100,
-      effectiveRate: Math.round(effectiveRate * 100) / 100
+      effectiveRate: Math.round(effectiveRate * 100) / 100,
+      bracket: lastBracket
     };
   }
 
-  private static calculateVAT(input: TaxInput): any {
+  private static calculateVAT(input: TaxInput): { vatCollected: number; vatPaid: number; vatToPay: number; vatToRefund: number } {
     const vatCollected = input.vatCollected;
     const vatPaid = input.vatPaid;
     const vatToPay = Math.max(0, vatCollected - vatPaid);
@@ -216,7 +218,7 @@ export class TaxCalculator {
     };
   }
 
-  private static generateOptimizationRecommendations(input: TaxInput, totalIncome: number, totalDeductions: number): any {
+  private static generateOptimizationRecommendations(input: TaxInput, totalIncome: number): { recommendations: string[]; potentialSavings: number } {
     const recommendations: string[] = [];
     let potentialSavings = 0;
     

@@ -24,11 +24,11 @@ export const TaxCalculator: React.FC = () => {
   const { isDarkMode, toggleDarkMode } = useDarkMode();
 
   return (
-    <div className="min-h-screen">
+    <div className="calculator-container">
       {/* Hero Section */}
       <section className="hero-section">
         <div className="container mx-auto px-6">
-          <div className="max-w-4xl mx-auto">
+          <div className="max-w-4xl mx-auto calculator-content">
             <h1 className="hero-title mb-6">
               Calculadora de
               <br />
@@ -44,7 +44,7 @@ export const TaxCalculator: React.FC = () => {
       </section>
 
       {/* Main Content */}
-      <div className="container mx-auto px-6 pb-20 -mt-12">
+      <div className="container mx-auto px-6 pb-20 -mt-12 calculator-content">
         {/* Input Form */}
         <div className="max-w-6xl mx-auto mb-16">
           <div className="glass-card-strong">

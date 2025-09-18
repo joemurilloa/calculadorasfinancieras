@@ -9,14 +9,14 @@ interface QuickNavigationProps {
 
 export function QuickNavigation({ currentView, onViewChange }: QuickNavigationProps) {
   const calculators = [
-    { id: 'pricing', name: 'Precio', icon: DollarSign, color: 'blue' },
-    { id: 'breakeven', name: 'Equilibrio', icon: TrendingUp, color: 'green' },
-    { id: 'cashflow', name: 'Flujo', icon: ArrowLeftRight, color: 'emerald' },
-    { id: 'roi', name: 'ROI', icon: BarChart3, color: 'purple' },
-    { id: 'loan', name: 'Préstamos', icon: Landmark, color: 'indigo' },
-    { id: 'budget', name: 'Presupuesto', icon: Wallet, color: 'emerald' },
+    { id: 'debt', name: 'Deudas', icon: CreditCard, color: 'green' },
     { id: 'tax', name: 'Impuestos', icon: Receipt, color: 'red' },
-    { id: 'debt', name: 'Deudas', icon: CreditCard, color: 'green' }
+    { id: 'budget', name: 'Presupuesto', icon: Wallet, color: 'emerald' },
+    { id: 'loan', name: 'Préstamos', icon: Landmark, color: 'indigo' },
+    { id: 'pricing', name: 'Precio', icon: DollarSign, color: 'blue' },
+    { id: 'roi', name: 'ROI', icon: BarChart3, color: 'purple' },
+    { id: 'cashflow', name: 'Flujo', icon: ArrowLeftRight, color: 'emerald' },
+    { id: 'breakeven', name: 'Equilibrio', icon: TrendingUp, color: 'green' }
   ];
 
   if (currentView === 'home') return null;

@@ -89,8 +89,7 @@ export class DebtCalculator {
 
   static calculateAvalancheStrategy(
     debts: Debt[], 
-    extraPayment: number, 
-    monthlyIncome: number
+    extraPayment: number
   ): DebtPaymentPlan {
     // Ordenar deudas por tasa de interés (mayor a menor)
     const sortedDebts = [...debts].sort((a, b) => b.interestRate - a.interestRate);
@@ -159,14 +158,13 @@ export class DebtCalculator {
       savings,
       payments,
       explanation: this.generateAvalancheExplanation(debts, monthsToFreedom, savings),
-      tips: this.generateAvalancheTips(debts, extraPayment)
+      tips: this.generateAvalancheTips()
     };
   }
 
   static calculateSnowballStrategy(
     debts: Debt[], 
-    extraPayment: number, 
-    monthlyIncome: number
+    extraPayment: number
   ): DebtPaymentPlan {
     // Ordenar deudas por balance (menor a mayor)
     const sortedDebts = [...debts].sort((a, b) => a.balance - b.balance);
@@ -245,8 +243,8 @@ export class DebtCalculator {
       extraPayment,
       savings,
       payments,
-      explanation: this.generateSnowballExplanation(debts, monthsToFreedom, savings),
-      tips: this.generateSnowballTips(debts, extraPayment)
+      explanation: this.generateSnowballExplanation(debts, monthsToFreedom),
+      tips: this.generateSnowballTips()
     };
   }
 
@@ -333,8 +331,8 @@ export class DebtCalculator {
       extraPayment,
       savings,
       payments,
-      explanation: this.generateCustomExplanation(debts, monthsToFreedom, savings),
-      tips: this.generateCustomTips(debts, extraPayment)
+      explanation: this.generateCustomExplanation(debts, monthsToFreedom),
+      tips: this.generateCustomTips()
     };
   }
 
@@ -360,7 +358,7 @@ export class DebtCalculator {
     return `El método avalancha te enfoca en pagar primero la deuda con mayor tasa de interés (${highestInterestDebt.name} al ${highestInterestDebt.interestRate}%). Esto te ahorrará $${savings.toLocaleString()} en intereses y te liberará de deudas en ${monthsToFreedom} meses. Es la estrategia más eficiente económicamente.`;
   }
 
-  private static generateSnowballExplanation(debts: Debt[], monthsToFreedom: number, savings: number): string {
+  private static generateSnowballExplanation(debts: Debt[], monthsToFreedom: number): string {
     const smallestDebt = debts.reduce((min, debt) => 
       debt.balance < min.balance ? debt : min
     );
@@ -368,11 +366,11 @@ export class DebtCalculator {
     return `El método bola de nieve te enfoca en pagar primero la deuda más pequeña (${smallestDebt.name} de $${smallestDebt.balance.toLocaleString()}). Esto te dará motivación al ver progreso rápido y liberará dinero para pagar las siguientes deudas. Te liberarás en ${monthsToFreedom} meses.`;
   }
 
-  private static generateCustomExplanation(debts: Debt[], monthsToFreedom: number, savings: number): string {
+  private static generateCustomExplanation(debts: Debt[], monthsToFreedom: number): string {
     return `Tu estrategia personalizada te permite priorizar las deudas según tus necesidades específicas. Esto puede incluir factores como relaciones con acreedores, plazos de vencimiento, o metas personales. Te liberarás en ${monthsToFreedom} meses.`;
   }
 
-  private static generateAvalancheTips(debts: Debt[], extraPayment: number): string[] {
+  private static generateAvalancheTips(): string[] {
     return [
       'Mantén el enfoque en la deuda con mayor interés, no te distraigas con otras',
       'Si puedes aumentar el pago extra, hazlo para acelerar el proceso',
@@ -382,7 +380,7 @@ export class DebtCalculator {
     ];
   }
 
-  private static generateSnowballTips(debts: Debt[], extraPayment: number): string[] {
+  private static generateSnowballTips(): string[] {
     return [
       'Paga la deuda más pequeña primero, sin importar la tasa de interés',
       'Una vez que pagues una deuda, usa ese dinero para la siguiente',
@@ -392,7 +390,7 @@ export class DebtCalculator {
     ];
   }
 
-  private static generateCustomTips(debts: Debt[], extraPayment: number): string[] {
+  private static generateCustomTips(): string[] {
     return [
       'Revisa y ajusta tus prioridades según cambien tus circunstancias',
       'Considera factores como plazos de vencimiento y relaciones con acreedores',
